@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sugar Studio — Cookie Decorating Kits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FFF6EC;--cream2:#FDE8D0;--cocoa:#3A2419;--cocoa2:#6B4A38;
+  --pink:#FF6F91;--pink2:#E64C73;--matcha:#7FB069;--butter:#FFD15C;
+  --line:#E7CFB6;--card:#FFFDFA;--r:20px;
+  --shadow:0 16px 40px -18px rgba(58,36,25,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;color:var(--cocoa);
+  background:var(--cream);min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 900px 500px at 5% 0%,#FFE0C8 0%,transparent 60%),
+    radial-gradient(ellipse 700px 400px at 95% 10%,#FFD8E4 0%,transparent 55%);
+}
+.wrap{max-width:720px;margin:0 auto;padding:16px 16px 100px;}
+
+/* topbar */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 4px 20px;}
+.brand{display:flex;align-items:center;gap:12px;}
+.logo{
+  width:48px;height:48px;border-radius:14px;
+  background:linear-gradient(135deg,var(--pink),var(--butter));
+  display:grid;place-items:center;font-size:24px;
+  box-shadow:0 8px 18px -6px rgba(230,76,115,.6);
+  transform:rotate(-5deg);flex:0 0 auto;
+}
+.brand-text h1{font-family:'Fraunces',serif;font-weight:900;font-size:1.45rem;letter-spacing:-.4px;line-height:1;}
+.brand-text p{font-size:.72rem;color:var(--cocoa2);font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-top:2px;}
+.tabs{display:inline-flex;background:#fff;border:2px solid var(--line);border-radius:999px;padding:4px;gap:2px;}
+.tabs button{
+  border:0;background:transparent;cursor:pointer;font-family:inherit;
+  font-weight:700;font-size:.78rem;padding:7px 13px;border-radius:999px;
+  color:var(--cocoa2);transition:.2s;
+}
+.tabs button.on{background:var(--cocoa);color:#fff;}
+
+/* hero */
+.hero{
+  background:var(--card);border:2px solid var(--line);border-radius:var(--r);
+  padding:24px;box-shadow:var(--shadow);margin-bottom:18px;
+  position:relative;overflow:hidden;
+}
+.hero::before{content:"🍪";position:absolute;right:-14px;top:-18px;font-size:110px;opacity:.07;transform:rotate(14deg);pointer-events:none;}
+.hero h2{font-family:'Fraunces',serif;font-size:1.85rem;font-weight:900;margin-bottom:6px;letter-spacing:-.4px;}
+.hero p{color:var(--cocoa2);font-size:.92rem;line-height:1.55;max-width:88%;}
+
+/* cards */
+.card{background:var(--card);border:2px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:var(--shadow);}
+.step-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.step-num{
+  width:26px;height:26px;border-radius:50%;background:var(--pink);color:#fff;
+  display:grid;place-items:center;font-weight:800;font-size:.82rem;flex:0 0 auto;
+}
+.step-head h3{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;}
+.req{color:var(--pink2);}
+.hint{font-size:.8rem;color:var(--cocoa2);margin:-4px 0 12px;}
+
+/* inputs */
+label.lbl{display:block;font-weight:700;font-size:.83rem;margin-bottom:5px;}
+input[type=text],input[type=email],input[type=number],input[type=password],select,textarea{
+  width:100%;padding:11px 13px;border:2px solid var(--line);border-radius:13px;
+  font-family:inherit;font-size:.92rem;background:#FFFDFB;color:var(--cocoa);
+  margin-bottom:13px;transition:.15s;appearance:none;
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);background:#fff;}
+textarea{min-height:60px;resize:vertical;}
+
+/* radio opts */
+.opts{display:grid;gap:9px;margin-bottom:13px;}
+.opt{
+  display:flex;align-items:center;gap:12px;padding:12px 14px;
+  border:2px solid var(--line);border-radius:15px;cursor:pointer;
+  background:#FFFDFB;transition:.15s;
+}
+.opt:hover{border-color:var(--pink);}
+.opt.sel{border-color:var(--pink);background:linear-gradient(135deg,#FFF1F5,#FFF8EC);}
+.opt input[type=radio]{accent-color:var(--pink2);width:17px;height:17px;flex:0 0 auto;}
+.opt .ot{font-weight:700;font-size:.9rem;}
+.opt .od{font-size:.76rem;color:var(--cocoa2);margin-top:2px;}
+.opt .op{margin-left:auto;font-weight:900;color:var(--pink2);font-family:'Fraunces',serif;white-space:nowrap;}
+
+/* pills */
+.pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:13px;}
+.pill{
+  border:2px solid var(--line);background:#fff;border-radius:999px;
+  padding:7px 13px;cursor:pointer;font-weight:700;font-size:.8rem;transition:.15s;
+}
+.pill:hover{border-color:var(--cocoa2);}
+.pill.sel{background:var(--cocoa);color:#fff;border-color:var(--cocoa);}
+
+/* total bar */
+.totalbar{
+  position:sticky;bottom:14px;z-index:10;margin-top:8px;
+  background:var(--cocoa);color:#fff;border-radius:18px;padding:14px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 20px 40px -14px rgba(58,36,25,.75);
+}
+.totalbar .tl{font-size:.72rem;opacity:.75;text-transform:uppercase;letter-spacing:1px;font-weight:700;}
+.totalbar .ta{font-family:'Fraunces',serif;font-size:1.65rem;font-weight:900;line-height:1;}
+
+/* buttons */
+.btn{
+  border:0;cursor:pointer;font-family:inherit;font-weight:800;font-size:.9rem;
+  padding:12px 20px;border-radius:13px;background:var(--pink);color:#fff;
+  transition:.15s;display:inline-block;
+}
+.btn:hover{background:var(--pink2);}
+.btn:disabled{background:#C9B6A6;cursor:not-allowed;}
+.btn.ghost{background:#fff;color:var(--cocoa);border:2px solid var(--line);}
+.btn.ghost:hover{border-color:var(--cocoa2);}
+.btn.green{background:var(--matcha);}
+.btn.green:hover{background:#5F9049;}
+
+.err{color:var(--pink2);font-size:.8rem;font-weight:700;margin:-6px 0 11px;}
+
+/* confirm */
+.confirm{text-align:center;padding:32px 20px;}
+.confirm .big{font-size:60px;margin-bottom:8px;}
+.confirm h2{font-family:'Fraunces',serif;font-size:1.9rem;margin-bottom:6px;}
+.paybox{
+  text-align:left;background:#FFF8EC;border:2px dashed var(--butter);
+  border-radius:16px;padding:16px 18px;margin:18px 0;
+}
+.paybox h4{font-family:'Fraunces',serif;font-size:1rem;margin-bottom:10px;}
+.prow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line);font-size:.88rem;}
+.prow:last-child{border:0;font-weight:800;}
+.prow span:first-child{color:var(--cocoa2);font-weight:600;}
+
+/* kitchen */
+.kstats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.kstat{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px;text-align:center;box-shadow:var(--shadow);}
+.kstat .kn{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:900;line-height:1;}
+.kstat .kl{font-size:.68rem;text-transform:uppercase;letter-spacing:.6px;color:var(--cocoa2);font-weight:700;margin-top:3px;}
+
+.fbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+
+.order-card{
+  background:var(--card);border:2px solid var(--line);border-radius:16px;
+  padding:16px;margin-bottom:12px;box-shadow:var(--shadow);
+}
+.order-card.s-doing{border-color:var(--butter);}
+.order-card.s-done{opacity:.55;}
+.oh{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.owho{font-family:'Fraunces',serif;font-weight:700;font-size:1.1rem;}
+.ometa{font-size:.75rem;color:var(--cocoa2);margin-top:2px;}
+.badge{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:4px 10px;border-radius:999px;}
+.b-new{background:#FFE0E8;color:var(--pink2);}
+.b-doing{background:#FFF0C0;color:#8A6600;}
+.b-done{background:#DCF0D4;color:#3A7020;}
+.ototal{font-family:'Fraunces',serif;font-weight:900;font-size:1.2rem;color:var(--pink2);}
+.odet{font-size:.83rem;line-height:1.6;border-top:1px dashed var(--line);padding-top:9px;margin-top:6px;}
+.odet .tag{display:inline-block;background:#FFF1F5;border:1px solid var(--line);border-radius:7px;padding:1px 7px;margin:2px 2px 2px 0;font-size:.78rem;}
+.oactions{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap;}
+.oactions .btn{padding:8px 14px;font-size:.78rem;}
+
+.lock-wrap{max-width:360px;margin:40px auto;}
+.empty-state{text-align:center;padding:48px 20px;color:var(--cocoa2);}
+.empty-state .bi{font-size:44px;margin-bottom:8px;}
+
+@keyframes fadein{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.card,.hero,.order-card{animation:fadein .3s ease both;}
+
+@media(max-width:500px){
+  .hero h2{font-size:1.5rem;}
+  .kstats{grid-template-columns:repeat(3,1fr);}
+  .kstat .kn{font-size:1.3rem;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-text">
+        <h1>Sugar Studio</h1>
+        <p>Cookie kits · ASHS</p>
+      </div>
+    </div>
+    <div class="tabs">
+      <button id="tabOrder" class="on" onclick="setView('order')">Order</button>
+      <button id="tabKitchen" onclick="setView('kitchen')">Kitchen</button>
+    </div>
+  </div>
+
+  <div id="view-order"></div>
+  <div id="view-kitchen" style="display:none"></div>
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxW9O1qdC72EfvuZs5-vdLIw6VYf02-19Dy36FNHSNb5QdX6F6UsIvrMtvFfoqnko6t/exec";
+const SHEET_ID   = "1_W_2N5q_vV8EA-T7f9A1XGUgJY8gCitd6AlU4FncUis";
+const KITCHEN_PIN = "2468"; // change this!
+
+// ── DATA ────────────────────────────────────────────────
+const PACKS = {
+  single:{ label:"Single Pack", desc:"1 cookie · 2 icing · 2 toppings", price:5,  cookies:1, icings:2, tops:2 },
+  four:  { label:"4 Pack",      desc:"4 cookies · 2 icing · 4 toppings",price:15, cookies:4, icings:2, tops:4 },
+  eight: { label:"8 Pack",      desc:"8 cookies · 2 icing · 6 toppings", price:25, cookies:8, icings:2, tops:6 },
+};
+const COOKIES = [
+  {id:"choc",   name:"Chocolate Chip", extra:0},
+  {id:"sugar",  name:"Sugar Cookie",   extra:0},
+  {id:"velvet", name:"Red Velvet",      extra:0},
+  {id:"oreo",   name:"Oreo Cookie",     extra:1},
+];
+const ICINGS  = ["Vanilla Buttercream","Lemon Buttercream","Milk Chocolate Ganache","Dark Chocolate Ganache","White Chocolate Ganache"];
+const TOPPINGS= ["Oreo","KitKat","Bueno","Pretzels","Mini M&Ms","Shredded Coconut","Chocolate Chip","Chocolate Button","White Chocolate Button","Dark Chocolate Button","Crushed Almonds"];
+
+// ── ORDER STATE ─────────────────────────────────────────
+let O = blank();
+let submitted = false;
+let kitchenOK = false;
+let kFilter   = "all";
+
+function blank(){
+  return {name:"",email:"",year:"",pack:"",cookie:"",
+          extraCookies:0,icings:["","",""],toppings:["","",""],
+          extraToppingCount:0,extraToppingNote:"",colorNote:""};
+}
+
+// ── PRICE ───────────────────────────────────────────────
+function total(){
+  const p=PACKS[O.pack]; if(!p) return 0;
+  let t=p.price;
+  const c=COOKIES.find(x=>x.id===O.cookie);
+  if(c&&c.extra) t+=c.extra*p.cookies;
+  t+=(O.extraCookies||0)*4;
+  t+=(O.extraToppingCount||0)*1;
+  return t;
+}
+
+// ── UTILS ───────────────────────────────────────────────
+const $=s=>document.querySelector(s);
+function esc(s){return(s||"").replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function syncText(){
+  if($("#f-name"))  O.name=$("#f-name").value;
+  if($("#f-email")) O.email=$("#f-email").value;
+}
+
+// ── ORDER VIEW ──────────────────────────────────────────
+function renderOrder(){
+  if(submitted){renderConfirm();return;}
+  const p=PACKS[O.pack];
+  const icN=p?p.icings:2;
+  $("#view-order").innerHTML=`
+    <div class="hero">
+      <h2>Build your cookie kit 🎨</h2>
+      <p>Pre-baked cookies + flavoured icing + your fave toppings. No oven, no stress — just decorating fun. Pick everything below.</p>
+    </div>
+
+    <div class="card">
+      <div class="step-head"><span class="step-num">1</span><h3>Your details</h3></div>
+      <label class="lbl">Full name <span class="req">*</span></label>
+      <input type="text" id="f-name" value="${esc(O.name)}" placeholder="e.g. Mia Patel">
+      <label class="lbl">Email <span class="req">*</span></label>
+      <input type="email" id="f-email" value="${esc(O.email)}" placeholder="your@email.com">
+      <label class="lbl">Year level <span class="req">*</span></label>
+      <div class="pills">
+        ${["Year 11","Year 12","Year 13"].map(y=>`<div class="pill ${O.year===y?'sel':''}" onclick="pick('year','${y}')">${y}</div>`).join("")}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="step-head"><span class="step-num">2</span><h3>Choose your pack</h3></div>
+      <div class="opts">
+        ${Object.entries(PACKS).map(([k,v])=>`
+          <label class="opt ${O.pack===k?'sel':''}" onclick="pick('pack','${k}')">
+            <input type="radio" name="pack" ${O.pack===k?'checked':''}>
+            <div><div class="ot">${v.label}</div><div class="od">${v.desc}</div></div>
+            <div class="op">$${v.price}</div>
+          </label>`).join("")}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="step-head"><span class="step-num">3</span><h3>Cookie flavour</h3></div>
+      <div class="opts">
+        ${COOKIES.map(c=>`
+          <label class="opt ${O.cookie===c.id?'sel':''}" onclick="pick('cookie','${c.id}')">
+            <input type="radio" name="cookie" ${O.cookie===c.id?'checked':''}>
+            <div class="ot">${c.name}</div>
+            ${c.extra?`<div class="op">+$${c.extra}/cookie</div>`:''}
+          </label>`).join("")}
+      </div>
+      <label class="lbl">Extra cookies? ($4 each · max 10)</label>
+      <input type="number" id="f-extra" min="0" max="10" value="${O.extraCookies||0}" oninput="setNum('extraCookies',this.value,0,10)">
+    </div>
+
+    <div class="card">
+      <div class="step-head"><span class="step-num">4</span><h3>Icing flavours</h3></div>
+      <div class="hint">Your pack includes ${icN} icing choice${icN>1?'s':''}.</div>
+      ${Array.from({length:icN}).map((_,i)=>`
+        <label class="lbl">Icing ${i+1} <span class="req">*</span></label>
+        <select onchange="setArr('icings',${i},this.value)">
+          <option value="">— choose —</option>
+          ${ICINGS.map(ic=>`<option ${O.icings[i]===ic?'selected':''}>${ic}</option>`).join("")}
+        </select>`).join("")}
+      <label class="lbl">Want a specific icing colour? (optional)</label>
+      <input type="text" id="f-col" value="${esc(O.colorNote)}" placeholder="e.g. vanilla buttercream → pink" oninput="O.colorNote=this.value">
+    </div>
+
+    <div class="card">
+      <div class="step-head"><span class="step-num">5</span><h3>Toppings</h3></div>
+      <div class="hint">Choose 2 toppings below.</div>
+      ${[0,1].map(i=>`
+        <label class="lbl">Topping ${i+1} <span class="req">*</span></label>
+        <select onchange="setArr('toppings',${i},this.value)">
+          <option value="">— choose —</option>
+          ${TOPPINGS.map(t=>`<option ${O.toppings[i]===t?'selected':''}>${t}</option>`).join("")}
+        </select>`).join("")}
+      <label class="lbl">Extra toppings? (+$1 each)</label>
+      <input type="number" min="0" max="10" value="${O.extraToppingCount||0}" oninput="setNum('extraToppingCount',this.value,0,10)">
+      <label class="lbl">Which extra toppings?</label>
+      <input type="text" value="${esc(O.extraToppingNote)}" placeholder="e.g. more Oreo + sprinkles" oninput="O.extraToppingNote=this.value">
+    </div>
+
+    <div id="oErr"></div>
+
+    <div class="totalbar">
+      <div>
+        <div class="tl">Estimated total</div>
+        <div class="ta">$${total().toFixed(2)}</div>
+      </div>
+      <button class="btn" id="submitBtn" onclick="submitOrder()">Place order →</button>
+    </div>`;
+}
+
+function renderConfirm(){
+  const c=COOKIES.find(x=>x.id===O.cookie);
+  const p=PACKS[O.pack];
+  const icN=p?p.icings:2;
+  $("#view-order").innerHTML=`
+    <div class="card confirm">
+      <div class="big">🎉</div>
+      <h2>Order placed!</h2>
+      <p style="color:var(--cocoa2);font-size:.92rem">Thanks ${esc(O.name.split(' ')[0]||'')}! Sugar Studio has your order. Pay below to confirm it.</p>
+      <div class="paybox">
+        <h4>💳 How to pay</h4>
+        <div class="prow"><span>Bank transfer</span><span>12-3456-7890123-00</span></div>
+        <div class="prow"><span>Reference</span><span>${esc(O.name)}</span></div>
+        <div class="prow"><span>Cash at school</span><span>ASHS</span></div>
+        <div class="prow"><span>Total</span><span>$${total().toFixed(2)}</span></div>
+      </div>
+      <div class="paybox" style="border-color:var(--matcha);background:#F2F9EE">
+        <h4>📦 Order summary</h4>
+        <div class="prow"><span>Pack</span><span>${p?p.label:''}</span></div>
+        <div class="prow"><span>Cookie</span><span>${c?c.name:''}${O.extraCookies?` +${O.extraCookies} extra`:''}</span></div>
+        <div class="prow"><span>Icing</span><span>${O.icings.slice(0,icN).filter(Boolean).join(', ')}</span></div>
+        <div class="prow"><span>Toppings</span><span>${O.toppings.slice(0,2).filter(Boolean).join(', ')}${O.extraToppingCount?` +${O.extraToppingCount} extra`:''}</span></div>
+      </div>
+      <button class="btn" onclick="resetOrder()">Place another order</button>
+    </div>`;
+}
+
+// ── INPUT HANDLERS ──────────────────────────────────────
+function pick(f,v){
+  syncText();
+  O[f]=v;
+  if(f==='pack'){const ic=PACKS[v].icings;for(let i=ic;i<3;i++)O.icings[i]="";}
+  renderOrder();
+}
+function setArr(f,i,v){O[f][i]=v;}
+function setNum(f,v,mn,mx){let n=parseInt(v)||0;n=Math.max(mn,Math.min(mx,n));O[f]=n;}
+
+// ── SUBMIT → GOOGLE SHEETS ──────────────────────────────
+async function submitOrder(){
+  syncText();
+  const p=PACKS[O.pack];
+  const icN=p?p.icings:2;
+  const errs=[];
+  if(!O.name.trim())  errs.push("name");
+  if(!O.email.trim()) errs.push("email");
+  if(!O.year)         errs.push("year level");
+  if(!O.pack)         errs.push("a pack");
+  if(!O.cookie)       errs.push("a cookie flavour");
+  if(O.icings.slice(0,icN).some(x=>!x)) errs.push("all icing choices");
+  if(O.toppings.slice(0,2).some(x=>!x)) errs.push("both toppings");
+  if(errs.length){
+    $("#oErr").innerHTML=`<div class="err">Please fill in: ${errs.join(", ")}.</div>`;
+    $("#oErr").scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+
+  const btn=$("#submitBtn");
+  btn.disabled=true; btn.textContent="Sending…";
+
+  const payload={
+    createdAt:new Date().toISOString(),
+    name:O.name.trim(), email:O.email.trim(), year:O.year,
+    pack:O.pack, packLabel:p.label,
+    cookie:O.cookie, cookieName:(COOKIES.find(c=>c.id===O.cookie)||{}).name,
+    extraCookies:O.extraCookies,
+    icings:O.icings.slice(0,icN).filter(Boolean),
+    toppings:O.toppings.slice(0,2).filter(Boolean),
+    extraToppingCount:O.extraToppingCount,
+    extraToppingNote:O.extraToppingNote,
+    colorNote:O.colorNote,
+    total:total()
+  };
+
+  try{
+    await fetch(SCRIPT_URL,{
+      method:"POST",
+      mode:"no-cors",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
+    });
+    submitted=true; renderOrder();
+  }catch(e){
+    btn.disabled=false; btn.textContent="Place order →";
+    $("#oErr").innerHTML=`<div class="err">Couldn't send your order. Check your connection and try again.</div>`;
+  }
+}
+
+function resetOrder(){O=blank();submitted=false;renderOrder();}
+
+// ── KITCHEN VIEW ────────────────────────────────────────
+function renderKitchen(){
+  if(!kitchenOK){renderLock();return;}
+  $("#view-kitchen").innerHTML=`<div class="empty-state"><div class="bi">⏳</div><p>Loading orders…</p></div>`;
+  loadOrders();
+}
+
+function renderLock(){
+  $("#view-kitchen").innerHTML=`
+    <div class="card lock-wrap">
+      <div style="text-align:center;padding:28px 16px;">
+        <div style="font-size:44px;margin-bottom:12px">🔒</div>
+        <h2 style="font-family:'Fraunces',serif;font-size:1.5rem;margin-bottom:6px">Kitchen access</h2>
+        <p style="color:var(--cocoa2);font-size:.88rem;margin-bottom:18px">Sugar Studio only — enter your PIN</p>
+        <input type="password" id="pin" placeholder="••••" style="text-align:center;font-size:1.5rem;letter-spacing:10px;margin-bottom:12px" onkeydown="if(event.key==='Enter')tryPin()">
+        <div id="pinErr"></div>
+        <button class="btn" style="width:100%" onclick="tryPin()">Unlock</button>
+      </div>
+    </div>`;
+}
+function tryPin(){
+  if($("#pin").value===KITCHEN_PIN){kitchenOK=true;renderKitchen();}
+  else{$("#pinErr").innerHTML=`<div class="err">Wrong PIN.</div>`;}
+}
+
+async function loadOrders(){
+  // Fetch from Google Sheet via published CSV
+  let orders=[];
+  try{
+    const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+    const res=await fetch(url);
+    const csv=await res.text();
+    orders=parseCSV(csv);
+  }catch(e){
+    orders=[];
+  }
+  drawKitchen(orders);
+}
+
+function parseCSV(csv){
+  const lines=csv.trim().split("\n");
+  if(lines.length<2) return [];
+  const headers=splitCSVRow(lines[0]).map(h=>h.replace(/^"|"$/g,'').trim());
+  return lines.slice(1).map(line=>{
+    const vals=splitCSVRow(line);
+    const o={};
+    headers.forEach((h,i)=>{ o[h]=(vals[i]||"").replace(/^"|"$/g,'').trim(); });
+    return o;
+  }).filter(o=>o.Name&&o.Name.length>0);
+}
+
+function splitCSVRow(row){
+  const result=[]; let cur=""; let inQ=false;
+  for(let i=0;i<row.length;i++){
+    const ch=row[i];
+    if(ch==='"'){if(inQ&&row[i+1]==='"'){cur+='"';i++;}else inQ=!inQ;}
+    else if(ch===','&&!inQ){result.push(cur);cur="";}
+    else cur+=ch;
+  }
+  result.push(cur); return result;
+}
+
+function drawKitchen(orders){
+  const rev=orders.reduce((s,o)=>{
+    const t=parseFloat((o.Total||"0").replace(/[^0-9.]/g,''))||0; return s+t;
+  },0);
+  const newN=orders.filter(o=>(o.Status||'')===''||o.Status==='New').length;
+  const doingN=orders.filter(o=>o.Status==='Making').length;
+  const doneN=orders.filter(o=>o.Status==='Done').length;
+
+  const shown=orders.filter(o=>{
+    const s=o.Status||'New';
+    if(kFilter==='all') return true;
+    if(kFilter==='new') return s===''||s==='New';
+    if(kFilter==='doing') return s==='Making';
+    if(kFilter==='done') return s==='Done';
+    return true;
+  });
+
+  $("#view-kitchen").innerHTML=`
+    <div class="hero" style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+      <div><h2 style="margin:0">The Kitchen 👩‍🍳</h2><p style="margin-top:4px">Orders from your Google Sheet</p></div>
+      <button class="btn ghost" onclick="loadOrders()">↻ Refresh</button>
+    </div>
+    <div class="kstats">
+      <div class="kstat"><div class="kn">${orders.length}</div><div class="kl">Total</div></div>
+      <div class="kstat"><div class="kn">$${rev.toFixed(0)}</div><div class="kl">Revenue</div></div>
+      <div class="kstat"><div class="kn" style="color:var(--pink2)">${newN}</div><div class="kl">New</div></div>
+    </div>
+    <div class="fbar">
+      ${[['all','All'],['new','New ('+newN+')'],['doing','Making ('+doingN+')'],['done','Done ('+doneN+')']].map(([k,l])=>
+        `<div class="pill ${kFilter===k?'sel':''}" onclick="kFilter='${k}';loadOrders()">${l}</div>`).join('')}
+    </div>
+    <div style="background:#FFF8EC;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:.8rem;color:var(--cocoa2);margin-bottom:14px;">
+      💡 To update order status, open your <a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit" target="_blank" style="color:var(--pink2);font-weight:700">Google Sheet</a> and change the Status column to <b>Making</b> or <b>Done</b>.
+    </div>
+    ${shown.length
+      ? shown.map(orderRow).join('')
+      : `<div class="empty-state"><div class="bi">🍪</div><p>No ${kFilter==='all'?'':kFilter} orders yet.</p></div>`}
+  `;
+}
+
+function orderRow(o){
+  const status=o.Status||'New';
+  const badgeCls={New:'b-new',Making:'b-doing',Done:'b-done'}[status]||'b-new';
+  const cardCls={New:'',Making:'s-doing',Done:'s-done'}[status]||'';
+  const time=o.Timestamp?new Date(o.Timestamp).toLocaleString('en-NZ',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'';
+  const paid=o.Paid==='Yes'?'✅ Paid':'⏳ Awaiting payment';
+  return `
+    <div class="order-card ${cardCls}">
+      <div class="oh">
+        <div>
+          <div class="owho">${esc(o.Name)}</div>
+          <div class="ometa">${esc(o['Year Level']||o.Year||'')} · ${esc(o.Email)} · ${time}</div>
+        </div>
+        <div style="text-align:right;flex:0 0 auto">
+          <span class="badge ${badgeCls}">${status}</span>
+          <div class="ototal" style="margin-top:5px">${esc(o.Total||'')}</div>
+          <div class="ometa">${paid}</div>
+        </div>
+      </div>
+      <div class="odet">
+        <b>${esc(o.Pack||'')}</b> — ${esc(o['Cookie Type']||o.Cookie||'')}${o['Extra Cookies']&&o['Extra Cookies']!='0'?` <b>+${esc(o['Extra Cookies'])} extra</b>`:''}<br>
+        <b>Icing:</b> ${(o.Icings||'').split(',').map(i=>`<span class="tag">${esc(i.trim())}</span>`).join('')}<br>
+        <b>Toppings:</b> ${(o.Toppings||'').split(',').map(t=>`<span class="tag">${esc(t.trim())}</span>`).join('')}${o['Extra Toppings']&&o['Extra Toppings']!='0'?` <b>+${esc(o['Extra Toppings'])} extra</b>`:''}<br>
+        ${o['Extra Topping Note']?`<b>Note:</b> ${esc(o['Extra Topping Note'])}<br>`:''}
+        ${o['Colour Note']?`<b>Colour:</b> ${esc(o['Colour Note'])}<br>`:''}
+      </div>
+    </div>`;
+}
+
+// ── ROUTER ───────────────────────────────────────────────
+function setView(v){
+  $("#tabOrder").classList.toggle("on",v==='order');
+  $("#tabKitchen").classList.toggle("on",v==='kitchen');
+  $("#view-order").style.display=v==='order'?'block':'none';
+  $("#view-kitchen").style.display=v==='kitchen'?'block':'none';
+  if(v==='kitchen') renderKitchen();
+}
+
+renderOrder();
+</script>
+</body>
+</html>
