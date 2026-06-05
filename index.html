@@ -173,14 +173,14 @@ body{
 }
 .kit-cookies{
   position:relative;z-index:1;
-  display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
-  gap:6px;line-height:1;width:100%;
+  display:grid;justify-items:center;align-items:center;
+  gap:8px;line-height:1;
   filter:drop-shadow(0 6px 14px rgba(42,24,16,.18));
 }
 .kit-cookies.single{font-size:110px;}
-.kit-cookies.four{font-size:62px;max-width:160px;}
-.kit-cookies.four br{display:none;}
-.kit-cookies.eight{font-size:42px;max-width:200px;letter-spacing:4px;}
+.kit-cookies.four{font-size:60px;grid-template-columns:repeat(2,1fr);}
+.kit-cookies.eight{font-size:38px;grid-template-columns:repeat(4,1fr);gap:6px;}
+.kit-cookies span{display:inline-block;}
 .kit-info{padding:24px 22px 28px;text-align:center;}
 .kit-info h3{font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;margin-bottom:8px;}
 .kit-info .desc{font-size:.82rem;color:var(--cocoa2);margin-bottom:14px;line-height:1.5;}
@@ -367,7 +367,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
   </div>
   <div class="split-text">
     <h2>Pick up your kit straight at school.</h2>
-    <p>Order online, pay by bank transfer or cash, and grab your decorating kit at ASHS. No shipping, no waiting.</p>
+    <p>Order online, pay by bank transfer or cash, and grab your decorating kit at ASHS. No shipping, no waiting — just walk over and collect.</p>
   </div>
 </section>
 
@@ -398,7 +398,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
     </div>
     <div class="kits-grid">
       <div class="kit-card" onclick="selectPack('single')">
-        <div class="kit-img"><div class="kit-cookies single">🍪</div></div>
+        <div class="kit-img"><div class="kit-cookies single"><span>🍪</span></div></div>
         <div class="kit-info">
           <h3>Single Pack</h3>
           <div class="desc">1 cookie · 2 icing · 2 toppings</div>
@@ -407,7 +407,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
         </div>
       </div>
       <div class="kit-card" onclick="selectPack('four')">
-        <div class="kit-img"><div class="kit-cookies four">🍪🍪🍪🍪</div></div>
+        <div class="kit-img"><div class="kit-cookies four"><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span></div></div>
         <div class="kit-info">
           <h3>4 Pack</h3>
           <div class="desc">4 cookies · 3 icing · 4 toppings</div>
@@ -416,7 +416,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
         </div>
       </div>
       <div class="kit-card" onclick="selectPack('eight')">
-        <div class="kit-img"><div class="kit-cookies eight">🍪🍪🍪🍪🍪🍪🍪🍪</div></div>
+        <div class="kit-img"><div class="kit-cookies eight"><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span></div></div>
         <div class="kit-info">
           <h3>8 Pack</h3>
           <div class="desc">8 cookies · 3 icing · 6 toppings</div>
