@@ -5,129 +5,486 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sugar Studio — Cookie Decorating Kits</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,800;9..144,900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --cream:#FFF6EC;--cream2:#FDE8D0;--cocoa:#3A2419;--cocoa2:#6B4A38;
-  --pink:#FF6F91;--pink2:#E64C73;--matcha:#7FB069;--butter:#FFD15C;
-  --line:#E7CFB6;--card:#FFFDFA;--r:20px;
-  --shadow:0 16px 40px -18px rgba(58,36,25,.4);
+  --cream:#FFF8F0;
+  --cream2:#FBEDD9;
+  --cocoa:#2A1810;
+  --cocoa2:#6B4A38;
+  --pink:#F4A8B8;
+  --pink-soft:#FFD9E2;
+  --pink-deep:#E88AA0;
+  --pink-bg:#FDECF1;
+  --blue:#A8C5DA;
+  --blue-soft:#D4E4F0;
+  --blue-deep:#7FAFC9;
+  --blue-bg:#E8F2F8;
+  --line:#E7CFB6;
+  --shadow:0 16px 40px -18px rgba(42,24,16,.3);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
   font-family:'DM Sans',sans-serif;color:var(--cocoa);
   background:var(--cream);min-height:100vh;
-  background-image:
-    radial-gradient(ellipse 900px 500px at 5% 0%,#FFE0C8 0%,transparent 60%),
-    radial-gradient(ellipse 700px 400px at 95% 10%,#FFD8E4 0%,transparent 55%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
-.wrap{max-width:720px;margin:0 auto;padding:16px 16px 100px;}
 
-.topbar{padding:14px 4px 20px;}
-.brand-text h1{font-family:'Fraunces',serif;font-weight:900;font-size:1.6rem;letter-spacing:-.4px;line-height:1;}
-.brand-text p{font-size:.74rem;color:var(--cocoa2);font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-top:3px;}
+/* ===== INFO STRIP (top) ===== */
+.tip-strip{
+  background:var(--pink);color:var(--cocoa);padding:11px 0;
+  font-size:.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  overflow:hidden;white-space:nowrap;
+}
+.tip-track{
+  display:inline-block;animation:scroll-x 25s linear infinite;padding-left:100%;
+}
+.tip-track span{margin:0 30px;}
+@keyframes scroll-x{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 
+/* ===== NAV ===== */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,248,240,.95);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.45rem;letter-spacing:-.5px;}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{color:var(--cocoa);text-decoration:none;font-weight:600;font-size:.88rem;transition:.15s;}
+.nav-links a:hover{color:var(--pink-deep);}
+.nav-cta{background:var(--pink);padding:10px 22px;border-radius:999px;font-weight:700!important;}
+.nav-cta:hover{background:var(--pink-deep);color:var(--cocoa)!important;}
+@media(max-width:600px){.nav-links a:not(.nav-cta){display:none;}}
+
+/* ===== HERO ===== */
 .hero{
-  background:var(--card);border:2px solid var(--line);border-radius:var(--r);
-  padding:24px;box-shadow:var(--shadow);margin-bottom:18px;
   position:relative;overflow:hidden;
+  background:linear-gradient(180deg,var(--cream) 0%,var(--pink-bg) 100%);
+  padding:50px 20px 30px;text-align:center;
 }
-.hero::before{content:"🍪";position:absolute;right:-14px;top:-18px;font-size:110px;opacity:.07;transform:rotate(14deg);pointer-events:none;}
-.hero h2{font-family:'Fraunces',serif;font-size:1.85rem;font-weight:900;margin-bottom:6px;letter-spacing:-.4px;}
-.hero p{color:var(--cocoa2);font-size:.92rem;line-height:1.55;max-width:88%;}
+.hero-eyebrow{
+  display:inline-block;background:#fff;border:2px solid var(--line);
+  padding:8px 16px;border-radius:999px;font-size:.74rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:1.5px;color:var(--cocoa2);margin-bottom:22px;
+}
+.hero-eyebrow .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#4CAF7A;margin-right:7px;vertical-align:middle;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.mega-title{
+  font-family:'Fraunces',serif;font-weight:900;
+  font-size:clamp(3.5rem,17vw,12rem);
+  line-height:.85;letter-spacing:-5px;
+  margin:10px 0 24px;
+  color:var(--cocoa);
+}
+.mega-title em{font-style:italic;color:var(--pink-deep);}
+.hero-sub{
+  font-family:'Fraunces',serif;
+  font-size:clamp(1.1rem,2.3vw,1.5rem);
+  color:var(--cocoa2);max-width:560px;margin:0 auto 28px;line-height:1.45;font-weight:400;
+}
+.hero-cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:50px;}
+.btn-pill{
+  display:inline-block;padding:15px 32px;background:var(--pink);color:var(--cocoa);
+  border:0;border-radius:999px;font-family:inherit;font-size:.95rem;font-weight:800;
+  cursor:pointer;text-decoration:none;transition:.2s;
+}
+.btn-pill:hover{background:var(--pink-deep);transform:translateY(-2px);}
+.btn-pill.blue{background:var(--blue);}
+.btn-pill.blue:hover{background:var(--blue-deep);}
+.btn-pill.outline{background:transparent;border:2px solid var(--cocoa);}
+.btn-pill.outline:hover{background:var(--cocoa);color:#fff;}
 
-.card{background:var(--card);border:2px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:var(--shadow);}
-.step-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-.step-num{
-  width:26px;height:26px;border-radius:50%;background:var(--pink);color:#fff;
-  display:grid;place-items:center;font-weight:800;font-size:.82rem;flex:0 0 auto;
+/* hero cookie row */
+.cookie-row{
+  display:flex;justify-content:center;align-items:flex-end;gap:20px;
+  font-size:80px;margin-top:10px;flex-wrap:wrap;
 }
-.step-head h3{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;}
-.req{color:var(--pink2);}
+.cookie-row span{display:inline-block;animation:wobble 3s ease-in-out infinite;}
+.cookie-row span:nth-child(1){animation-delay:0s;font-size:60px;}
+.cookie-row span:nth-child(2){animation-delay:.3s;}
+.cookie-row span:nth-child(3){animation-delay:.6s;font-size:70px;}
+.cookie-row span:nth-child(4){animation-delay:.9s;}
+.cookie-row span:nth-child(5){animation-delay:1.2s;font-size:55px;}
+@keyframes wobble{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(8deg)}}
+
+/* ===== SPLIT BLOCK (photo + color) ===== */
+.split{display:grid;grid-template-columns:1fr 1fr;min-height:480px;}
+@media(max-width:760px){.split{grid-template-columns:1fr;min-height:auto;}}
+.split-img{
+  background:
+    radial-gradient(circle at 30% 40%,#FFC9D6 0%,transparent 55%),
+    radial-gradient(circle at 70% 70%,#D4E4F0 0%,transparent 50%),
+    linear-gradient(135deg,var(--pink-bg),var(--blue-bg));
+  position:relative;min-height:360px;display:grid;place-items:center;
+}
+.split-img::after{
+  content:"🍪";font-size:180px;
+  filter:drop-shadow(0 10px 30px rgba(42,24,16,.2));
+}
+.split-img-deco{
+  position:absolute;font-size:50px;opacity:.5;
+}
+.split-img .d1{top:15%;left:15%;animation:float 6s ease-in-out infinite;}
+.split-img .d2{bottom:15%;right:15%;animation:float 5s ease-in-out infinite 1s;font-size:40px;}
+.split-img .d3{top:25%;right:20%;animation:float 7s ease-in-out infinite 2s;font-size:35px;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+.split-text{
+  background:var(--pink-bg);
+  padding:60px 50px;display:flex;flex-direction:column;justify-content:center;
+}
+.split-text.blue{background:var(--blue-bg);}
+.split-text h2{
+  font-family:'Fraunces',serif;font-weight:900;
+  font-size:clamp(2rem,4vw,3rem);letter-spacing:-1px;line-height:1.05;margin-bottom:20px;
+}
+.split-text p{font-size:1.02rem;color:var(--cocoa2);line-height:1.6;margin-bottom:24px;max-width:420px;}
+.split-text .btn-pill{align-self:flex-start;}
+
+/* ===== KITS / PRODUCTS GRID ===== */
+.section{padding:90px 20px;}
+.section-inner{max-width:1200px;margin:0 auto;}
+.section-head{text-align:center;margin-bottom:50px;}
+.eyebrow{display:inline-block;font-size:.75rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--pink-deep);margin-bottom:12px;}
+.h-title{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.2rem,4.5vw,3.5rem);letter-spacing:-1.5px;line-height:1.05;}
+.h-title em{font-style:italic;color:var(--pink-deep);}
+.h-sub{font-size:1rem;color:var(--cocoa2);max-width:540px;margin:14px auto 0;line-height:1.6;}
+
+.kits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+@media(max-width:860px){.kits-grid{grid-template-columns:1fr;}}
+.kit-card{
+  background:#fff;border-radius:20px;overflow:hidden;
+  transition:.25s;cursor:pointer;
+}
+.kit-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);}
+.kit-img{
+  aspect-ratio:1;display:grid;place-items:center;
+  position:relative;padding:30px;
+}
+.kit-card:nth-child(1) .kit-img{background:var(--pink-bg);}
+.kit-card:nth-child(2) .kit-img{background:var(--blue-bg);}
+.kit-card:nth-child(3) .kit-img{background:#F5E8FF;}
+.kit-img::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle at 20% 30%,rgba(255,255,255,.6) 0px,transparent 30px),
+    radial-gradient(circle at 80% 70%,rgba(255,255,255,.5) 0px,transparent 40px);
+}
+.kit-cookies{
+  position:relative;z-index:1;
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+  gap:6px;line-height:1;width:100%;
+  filter:drop-shadow(0 6px 14px rgba(42,24,16,.18));
+}
+.kit-cookies.single{font-size:110px;}
+.kit-cookies.four{font-size:62px;max-width:160px;}
+.kit-cookies.four br{display:none;}
+.kit-cookies.eight{font-size:42px;max-width:200px;letter-spacing:4px;}
+.kit-info{padding:24px 22px 28px;text-align:center;}
+.kit-info h3{font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;margin-bottom:8px;}
+.kit-info .desc{font-size:.82rem;color:var(--cocoa2);margin-bottom:14px;line-height:1.5;}
+.kit-info .price{font-family:'Fraunces',serif;font-weight:900;font-size:1.5rem;margin-bottom:16px;}
+.kit-info .price small{font-size:.85rem;color:var(--cocoa2);font-weight:400;display:block;font-family:'DM Sans',sans-serif;margin-top:2px;}
+.kit-info .btn-pill{font-size:.85rem;padding:11px 24px;}
+
+/* ===== STORY ===== */
+.story-bg{background:var(--blue-bg);}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+@media(max-width:760px){.story-grid{grid-template-columns:1fr;gap:30px;}}
+.story-img{
+  aspect-ratio:1;border-radius:24px;
+  background:
+    radial-gradient(circle at 30% 30%,var(--pink-soft) 0%,transparent 50%),
+    radial-gradient(circle at 70% 70%,var(--blue-soft) 0%,transparent 50%),
+    linear-gradient(135deg,#FFE8E0,#E0EFFA);
+  position:relative;display:grid;place-items:center;
+  overflow:hidden;
+}
+.story-img::after{
+  content:"🧁";font-size:160px;filter:drop-shadow(0 10px 30px rgba(42,24,16,.15));
+}
+.story-img .emo{position:absolute;font-size:40px;opacity:.5;}
+.story-img .e1{top:12%;left:12%;animation:float 5s infinite;}
+.story-img .e2{bottom:15%;right:15%;animation:float 7s infinite 1s;font-size:50px;}
+.story-img .e3{top:60%;left:10%;animation:float 6s infinite 2s;font-size:32px;}
+.story-text h2{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2rem,4vw,3rem);letter-spacing:-1px;line-height:1.05;margin-bottom:20px;}
+.story-text h2 em{font-style:italic;color:var(--pink-deep);}
+.story-text p{font-size:1.02rem;line-height:1.7;color:var(--cocoa2);margin-bottom:14px;}
+.story-text em{color:var(--pink-deep);font-style:italic;font-weight:600;}
+
+/* ===== HOW IT WORKS ===== */
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+@media(max-width:760px){.steps-grid{grid-template-columns:1fr;}}
+.step-card{
+  background:#fff;border:2px solid var(--line);border-radius:24px;
+  padding:32px 26px;text-align:center;transition:.2s;
+}
+.step-card:hover{transform:translateY(-4px);border-color:var(--pink);box-shadow:var(--shadow);}
+.step-card .num{
+  display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;
+  background:var(--pink);color:var(--cocoa);font-family:'Fraunces',serif;
+  font-weight:900;font-size:1.1rem;margin-bottom:18px;
+}
+.step-card:nth-child(2) .num{background:var(--blue);}
+.step-card:nth-child(3) .num{background:#E0C8F0;}
+.step-card .emo{font-size:48px;display:block;margin-bottom:14px;}
+.step-card h3{font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;margin-bottom:10px;}
+.step-card p{font-size:.92rem;color:var(--cocoa2);line-height:1.6;}
+
+/* ===== FLAVOURS ===== */
+.flav-bg{background:var(--pink-bg);}
+.flav-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:36px;}
+@media(max-width:760px){.flav-grid{grid-template-columns:repeat(2,1fr);}}
+.flav-card{background:#fff;border-radius:18px;padding:24px 18px;text-align:center;cursor:pointer;transition:.2s;border:2px solid transparent;}
+.flav-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--pink);}
+.flav-emoji{font-size:42px;display:block;margin-bottom:10px;}
+.flav-name{font-family:'Fraunces',serif;font-weight:700;font-size:1.1rem;}
+.flav-tag{font-size:.78rem;color:var(--cocoa2);margin-top:4px;}
+
+/* ===== CTA BANNER ===== */
+.cta-banner{
+  background:var(--cocoa);color:var(--cream);text-align:center;
+  padding:90px 20px;position:relative;overflow:hidden;
+}
+.cta-banner::before,.cta-banner::after{
+  content:"🍪";position:absolute;font-size:200px;opacity:.06;
+}
+.cta-banner::before{left:-40px;top:-30px;transform:rotate(-15deg);}
+.cta-banner::after{right:-40px;bottom:-40px;transform:rotate(20deg);}
+.cta-banner h2{font-family:'Fraunces',serif;font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;margin-bottom:14px;letter-spacing:-1px;line-height:1.05;}
+.cta-banner h2 em{font-style:italic;color:var(--pink);}
+.cta-banner p{font-size:1.05rem;opacity:.8;margin-bottom:28px;max-width:520px;margin-left:auto;margin-right:auto;}
+
+/* ===== ORDER SECTION ===== */
+.order-section{padding:80px 20px 100px;background:linear-gradient(180deg,var(--cream) 0%,var(--pink-bg) 100%);}
+.order-inner{max-width:720px;margin:0 auto;}
+.order-heading{text-align:center;margin-bottom:36px;}
+
+.card{background:#fff;border:2px solid var(--line);border-radius:20px;padding:22px;margin-bottom:16px;box-shadow:var(--shadow);}
+.step-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.step-num{width:26px;height:26px;border-radius:50%;background:var(--pink);color:var(--cocoa);display:grid;place-items:center;font-weight:800;font-size:.82rem;flex:0 0 auto;}
+.step-head h3{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;}
+.req{color:var(--pink-deep);}
 .hint{font-size:.8rem;color:var(--cocoa2);margin:-4px 0 12px;}
 
 label.lbl{display:block;font-weight:700;font-size:.83rem;margin-bottom:5px;}
 input[type=text],input[type=email],input[type=number],select,textarea{
-  width:100%;padding:11px 13px;border:2px solid var(--line);border-radius:13px;
+  width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:12px;
   font-family:inherit;font-size:.92rem;background:#FFFDFB;color:var(--cocoa);
   margin-bottom:13px;transition:.15s;appearance:none;
 }
+textarea{min-height:90px;resize:vertical;line-height:1.5;}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);background:#fff;}
 
 .opts{display:grid;gap:9px;margin-bottom:13px;}
-.opt{
-  display:flex;align-items:center;gap:12px;padding:12px 14px;
-  border:2px solid var(--line);border-radius:15px;cursor:pointer;
-  background:#FFFDFB;transition:.15s;
-}
+.opt{display:flex;align-items:center;gap:12px;padding:13px 14px;border:2px solid var(--line);border-radius:14px;cursor:pointer;background:#FFFDFB;transition:.15s;}
 .opt:hover{border-color:var(--pink);}
-.opt.sel{border-color:var(--pink);background:linear-gradient(135deg,#FFF1F5,#FFF8EC);}
-.opt input[type=radio]{accent-color:var(--pink2);width:17px;height:17px;flex:0 0 auto;}
-.opt .ot{font-weight:700;font-size:.9rem;}
+.opt.sel{border-color:var(--pink);background:var(--pink-bg);}
+.opt input[type=radio]{accent-color:var(--pink-deep);width:17px;height:17px;flex:0 0 auto;}
+.opt .ot{font-weight:700;font-size:.92rem;}
 .opt .od{font-size:.76rem;color:var(--cocoa2);margin-top:2px;}
-.opt .op{margin-left:auto;font-weight:900;color:var(--pink2);font-family:'Fraunces',serif;white-space:nowrap;}
+.opt .op{margin-left:auto;font-weight:900;color:var(--pink-deep);font-family:'Fraunces',serif;white-space:nowrap;}
 
 .totalbar{
-  position:sticky;bottom:14px;z-index:10;margin-top:8px;
-  background:var(--cocoa);color:#fff;border-radius:18px;padding:14px 18px;
+  position:sticky;bottom:14px;z-index:20;margin-top:8px;
+  background:var(--cocoa);color:#fff;border-radius:18px;padding:15px 18px;
   display:flex;align-items:center;justify-content:space-between;
-  box-shadow:0 20px 40px -14px rgba(58,36,25,.75);
+  box-shadow:0 20px 40px -14px rgba(42,24,16,.7);
 }
 .totalbar .tl{font-size:.72rem;opacity:.75;text-transform:uppercase;letter-spacing:1px;font-weight:700;}
-.totalbar .ta{font-family:'Fraunces',serif;font-size:1.65rem;font-weight:900;line-height:1;}
+.totalbar .ta{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:900;line-height:1;}
+.totalbar .btn{background:var(--pink);color:var(--cocoa);}
+.totalbar .btn:hover{background:var(--pink-deep);}
 
-.btn{
-  border:0;cursor:pointer;font-family:inherit;font-weight:800;font-size:.9rem;
-  padding:12px 20px;border-radius:13px;background:var(--pink);color:#fff;
-  transition:.15s;display:inline-block;
-}
-.btn:hover{background:var(--pink2);}
-.btn:disabled{background:#C9B6A6;cursor:not-allowed;}
+.btn{border:0;cursor:pointer;font-family:inherit;font-weight:800;font-size:.9rem;padding:12px 22px;border-radius:999px;background:var(--pink);color:var(--cocoa);transition:.15s;display:inline-block;}
+.btn:hover{background:var(--pink-deep);}
+.btn:disabled{background:#C9B6A6;cursor:not-allowed;color:#fff;}
 .btn.ghost{background:#fff;color:var(--cocoa);border:2px solid var(--line);}
 .btn.ghost:hover{border-color:var(--cocoa2);}
 
-.err{color:var(--pink2);font-size:.8rem;font-weight:700;margin:-6px 0 11px;}
+.err{color:var(--pink-deep);font-size:.82rem;font-weight:700;margin:-6px 0 11px;}
 
-.confirm{text-align:center;padding:32px 20px;}
+.confirm{text-align:center;padding:36px 20px;}
 .confirm .big{font-size:60px;margin-bottom:8px;}
-.confirm h2{font-family:'Fraunces',serif;font-size:1.9rem;margin-bottom:6px;}
-.paybox{
-  text-align:left;background:#FFF8EC;border:2px dashed var(--butter);
-  border-radius:16px;padding:16px 18px;margin:18px 0;
-}
-.paybox h4{font-family:'Fraunces',serif;font-size:1rem;margin-bottom:10px;}
+.confirm h2{font-family:'Fraunces',serif;font-size:2rem;margin-bottom:6px;font-weight:900;}
+.paybox{text-align:left;background:var(--blue-bg);border:2px dashed var(--blue);border-radius:16px;padding:18px 20px;margin:18px 0;}
+.paybox.pink{background:var(--pink-bg);border-color:var(--pink);}
+.paybox h4{font-family:'Fraunces',serif;font-size:1.05rem;margin-bottom:10px;}
 .prow{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:.88rem;}
 .prow:last-child{border:0;font-weight:800;}
 .prow span:first-child{color:var(--cocoa2);font-weight:600;flex:0 0 auto;}
 .prow span:last-child{text-align:right;}
 
-/* review */
-.review-head{text-align:center;margin-bottom:18px;}
+.review-head{text-align:center;margin-bottom:20px;}
 .review-head .big{font-size:38px;margin-bottom:4px;}
 .review-head h2{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:900;}
 .review-head p{color:var(--cocoa2);font-size:.88rem;margin-top:4px;}
 .review-actions{display:flex;gap:10px;margin-top:18px;}
 .review-actions .btn{flex:1;text-align:center;}
 
-@keyframes fadein{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
-.card,.hero{animation:fadein .3s ease both;}
+/* ===== FOOTER ===== */
+.foot{background:var(--cocoa);color:var(--cream);padding:60px 20px 30px;text-align:center;}
+.foot-brand{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.5rem,8vw,5rem);letter-spacing:-2px;line-height:.95;margin-bottom:10px;}
+.foot p{opacity:.7;font-size:.92rem;}
+.foot .socials{margin:20px 0;display:flex;justify-content:center;gap:18px;font-size:1.5rem;}
+.foot .copy{font-size:.74rem;opacity:.5;margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);}
 
-@media(max-width:500px){
-  .hero h2{font-size:1.5rem;}
-}
+@keyframes fadein{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.card{animation:fadein .3s ease both;}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="topbar">
-    <div class="brand-text">
-      <h1>Sugar Studio</h1>
-      <p>Cookie kits · ASHS</p>
+
+<!-- ========== NAV ========== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">Sugar Studio</div>
+    <div class="nav-links">
+      <a href="#kits">Our Kits</a>
+      <a href="#how">How it works</a>
+      <a href="#order" class="nav-cta">Order now</a>
     </div>
   </div>
-  <div id="view"></div>
-</div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-eyebrow"><span class="dot"></span>Now taking orders · ASHS</div>
+  <h1 class="mega-title">Sugar <em>Studio</em></h1>
+  <p class="hero-sub">Pre-baked cookies, dreamy icing, and your favourite toppings — all in one box. No oven, no stress, just decorating fun.</p>
+  <div class="hero-cta-row">
+    <a href="#order" class="btn-pill">Build your kit →</a>
+  </div>
+</section>
+
+<!-- ========== SPLIT BLOCK 1 ========== -->
+<section class="split">
+  <div class="split-img">
+    <span class="split-img-deco d1">✨</span>
+    <span class="split-img-deco d2">🎨</span>
+    <span class="split-img-deco d3">🧁</span>
+  </div>
+  <div class="split-text">
+    <h2>Pick up your kit straight at school.</h2>
+    <p>Order online, pay by bank transfer or cash, and grab your decorating kit at ASHS. No shipping, no waiting — just walk over and collect.</p>
+  </div>
+</section>
+
+<!-- ========== FLAVOURS ========== -->
+<section class="section flav-bg">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="eyebrow">What's inside</div>
+      <h2 class="h-title">Cookies that <em>actually</em> taste good.</h2>
+      <p class="h-sub">Four cookie bases. Five icing flavours. Eleven toppings. Endless combinations.</p>
+    </div>
+    <div class="flav-grid">
+      <div class="flav-card" onclick="selectCookie('choc')"><span class="flav-emoji">🍫</span><div class="flav-name">Chocolate Chip</div><div class="flav-tag">A classic</div></div>
+      <div class="flav-card" onclick="selectCookie('sugar')"><span class="flav-emoji">🌸</span><div class="flav-name">Sugar Cookie</div><div class="flav-tag">Buttery & soft</div></div>
+      <div class="flav-card" onclick="selectCookie('velvet')"><span class="flav-emoji">❤️</span><div class="flav-name">Red Velvet</div><div class="flav-tag">For the romantics</div></div>
+      <div class="flav-card" onclick="selectCookie('oreo')"><span class="flav-emoji">🖤</span><div class="flav-name">Oreo</div><div class="flav-tag">Crumbly & rich</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== OUR KITS ========== -->
+<section class="section" id="kits">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="eyebrow">Our Kits</div>
+      <h2 class="h-title">Three sizes. <em>Endless</em> combos.</h2>
+      <p class="h-sub">Whether it's a solo treat or a kit for the whole friend group, Sugar Studio has something for the cookie monster in everyone.</p>
+    </div>
+    <div class="kits-grid">
+      <div class="kit-card" onclick="selectPack('single')">
+        <div class="kit-img"><div class="kit-cookies single">🍪</div></div>
+        <div class="kit-info">
+          <h3>Single Pack</h3>
+          <div class="desc">1 cookie · 2 icing · 2 toppings</div>
+          <div class="price">$5<small>per pack</small></div>
+          <button class="btn-pill">Build kit</button>
+        </div>
+      </div>
+      <div class="kit-card" onclick="selectPack('four')">
+        <div class="kit-img"><div class="kit-cookies four">🍪🍪🍪🍪</div></div>
+        <div class="kit-info">
+          <h3>4 Pack</h3>
+          <div class="desc">4 cookies · 3 icing · 4 toppings</div>
+          <div class="price">$15<small>per pack</small></div>
+          <button class="btn-pill blue">Build kit</button>
+        </div>
+      </div>
+      <div class="kit-card" onclick="selectPack('eight')">
+        <div class="kit-img"><div class="kit-cookies eight">🍪🍪🍪🍪🍪🍪🍪🍪</div></div>
+        <div class="kit-info">
+          <h3>8 Pack</h3>
+          <div class="desc">8 cookies · 3 icing · 6 toppings</div>
+          <div class="price">$25<small>per pack</small></div>
+          <button class="btn-pill">Build kit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW IT WORKS ========== -->
+<section class="section" id="how">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="eyebrow">How it works</div>
+      <h2 class="h-title">From order to <em>cookies in hand.</em></h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="num">1</div>
+        <span class="emo">🛒</span>
+        <h3>Choose your pack</h3>
+        <p>Pick from single, 4-pack or 8-pack — each comes loaded with cookies, icing & toppings.</p>
+      </div>
+      <div class="step-card">
+        <div class="num">2</div>
+        <span class="emo">🎨</span>
+        <h3>Pick your flavours</h3>
+        <p>Mix and match your cookie, icing and topping combos. Make it sweet, salty, or chaotic.</p>
+      </div>
+      <div class="step-card">
+        <div class="num">3</div>
+        <span class="emo">📦</span>
+        <h3>Pick up at ASHS</h3>
+        <p>Pay by bank transfer or cash, grab your kit at school, decorate with your people.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA BANNER ========== -->
+<section class="cta-banner">
+  <h2>Ready to <em>decorate?</em></h2>
+  <p>Build your kit below and we'll have it ready for you at school.</p>
+</section>
+
+<!-- ========== ORDER FORM ========== -->
+<section class="order-section" id="order">
+  <div class="order-inner">
+    <div class="order-heading">
+      <div class="eyebrow">Order</div>
+      <h2 class="h-title">Build your <em>kit</em></h2>
+      <p class="h-sub">Fill in everything below — we'll send you a confirmation.</p>
+    </div>
+    <div id="view"></div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="foot">
+  <div class="foot-brand">Sugar Studio</div>
+  <p>Cookie decorating kits · Auckland · ASHS</p>
+  <div class="socials">
+    <span>📷</span><span>🎵</span><span>📧</span>
+  </div>
+  <div class="copy">© 2026 Sugar Studio. Made with 🍪 by Year 13.</div>
+</footer>
 
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxW9O1qdC72EfvuZs5-vdLIw6VYf02-19Dy36FNHSNb5QdX6F6UsIvrMtvFfoqnko6t/exec";
@@ -147,12 +504,12 @@ const ICINGS  = ["Vanilla Buttercream","Lemon Buttercream","Milk Chocolate Ganac
 const TOPPINGS= ["Oreo","KitKat","Bueno","Pretzels","Mini M&Ms","Shredded Coconut","Chocolate Chip","Chocolate Button","White Chocolate Button","Dark Chocolate Button","Crushed Almonds"];
 
 let O = blank();
-let stage = "form"; // form → review → done
+let stage = "form";
 
 function blank(){
   return {name:"",email:"",pack:"",cookie:"",
           extraCookies:0,icings:["","",""],toppings:["","","","","",""],
-          extraToppingCount:0,extraToppingNote:"",colorNote:""};
+          extraToppingCount:0,extraToppingNote:"",colorNote:"",specialRequests:""};
 }
 
 function total(){
@@ -171,6 +528,25 @@ function syncText(){
   if($("#f-name"))  O.name=$("#f-name").value;
   if($("#f-email")) O.email=$("#f-email").value;
 }
+function scrollToOrder(){document.getElementById("order").scrollIntoView({behavior:"smooth"});}
+
+function selectPack(packKey){
+  O.pack = packKey;
+  const ic = PACKS[packKey].icings;
+  for(let i=ic;i<3;i++) O.icings[i]="";
+  const tp = PACKS[packKey].tops;
+  for(let i=tp;i<6;i++) O.toppings[i]="";
+  stage = "form";
+  render();
+  scrollToOrder();
+}
+
+function selectCookie(cookieId){
+  O.cookie = cookieId;
+  stage = "form";
+  render();
+  scrollToOrder();
+}
 
 function render(){
   if(stage==="done") return renderConfirm();
@@ -183,11 +559,6 @@ function renderForm(){
   const icN=p?p.icings:2;
   const tpN=p?p.tops:2;
   $("#view").innerHTML=`
-    <div class="hero">
-      <h2>Build your cookie kit 🎨</h2>
-      <p>Pre-baked cookies + flavoured icing + your fave toppings. No oven, no stress — just decorating fun. Pick everything below.</p>
-    </div>
-
     <div class="card">
       <div class="step-head"><span class="step-num">1</span><h3>Your details</h3></div>
       <label class="lbl">Full name <span class="req">*</span></label>
@@ -250,6 +621,12 @@ function renderForm(){
       <input type="text" value="${esc(O.extraToppingNote)}" placeholder="e.g. more Oreo + sprinkles" oninput="O.extraToppingNote=this.value">
     </div>
 
+    <div class="card">
+      <div class="step-head"><span class="step-num">6</span><h3>Dietary restrictions or special requests</h3></div>
+      <div class="hint">Allergies, dietary needs (vegan, gluten-free, nut-free), or anything else we should know? (optional)</div>
+      <textarea placeholder="e.g. nut allergy, gluten-free icing, please write 'happy birthday' on top..." oninput="O.specialRequests=this.value">${esc(O.specialRequests)}</textarea>
+    </div>
+
     <div id="oErr"></div>
 
     <div class="totalbar">
@@ -279,7 +656,7 @@ function renderReview(){
         <div class="prow"><span>Email</span><span>${esc(O.email)}</span></div>
       </div>
 
-      <div class="paybox" style="border-color:var(--pink);background:#FFF1F5">
+      <div class="paybox pink">
         <h4>🍪 Your kit</h4>
         <div class="prow"><span>Pack</span><span>${p.label} — $${p.price}</span></div>
         <div class="prow"><span>Cookie</span><span>${c.name}${c.extra?` (+$${c.extra*p.cookies})`:''}</span></div>
@@ -292,6 +669,8 @@ function renderReview(){
         <div class="prow"><span>Total</span><span>$${total().toFixed(2)}</span></div>
       </div>
 
+      ${O.specialRequests?`<div class="paybox" style="background:var(--blue-bg);border-color:var(--blue);"><h4>⚠️ Dietary / special requests</h4><p style="font-size:.9rem;line-height:1.55;color:var(--cocoa2);white-space:pre-wrap;">${esc(O.specialRequests)}</p></div>`:''}
+
       <div id="oErr"></div>
 
       <div class="review-actions">
@@ -302,8 +681,6 @@ function renderReview(){
 }
 
 function renderConfirm(){
-  const c=COOKIES.find(x=>x.id===O.cookie);
-  const p=PACKS[O.pack];
   $("#view").innerHTML=`
     <div class="card confirm">
       <div class="big">🎉</div>
@@ -352,10 +729,11 @@ function goReview(){
     $("#oErr").scrollIntoView({behavior:"smooth",block:"center"});
     return;
   }
-  stage="review"; render(); window.scrollTo({top:0,behavior:"smooth"});
+  stage="review"; render();
+  scrollToOrder();
 }
 
-function goBack(){stage="form";render();window.scrollTo({top:0,behavior:"smooth"});}
+function goBack(){stage="form";render();scrollToOrder();}
 
 async function submitOrder(){
   const btn=$("#submitBtn");
@@ -373,6 +751,7 @@ async function submitOrder(){
     extraToppingCount:O.extraToppingCount,
     extraToppingNote:O.extraToppingNote,
     colorNote:O.colorNote,
+    specialRequests:O.specialRequests,
     total:total()
   };
   try{
@@ -381,14 +760,15 @@ async function submitOrder(){
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify(payload)
     });
-    stage="done"; render(); window.scrollTo({top:0,behavior:"smooth"});
+    stage="done"; render();
+    scrollToOrder();
   }catch(e){
     btn.disabled=false; btn.textContent="Confirm & place order ✓";
     $("#oErr").innerHTML=`<div class="err">Couldn't send your order. Check your connection and try again.</div>`;
   }
 }
 
-function resetOrder(){O=blank();stage="form";render();window.scrollTo({top:0,behavior:"smooth"});}
+function resetOrder(){O=blank();stage="form";render();scrollToOrder();}
 
 render();
 </script>
