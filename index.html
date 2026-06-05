@@ -110,37 +110,37 @@ body{
 @keyframes wobble{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(8deg)}}
 
 /* ===== SPLIT BLOCK (photo + color) ===== */
-.split{display:grid;grid-template-columns:1fr 1fr;min-height:480px;}
-@media(max-width:760px){.split{grid-template-columns:1fr;min-height:auto;}}
+.split{
+  display:grid;grid-template-columns:1fr 1fr;
+  background:linear-gradient(180deg,var(--pink-bg) 0%,var(--cream) 100%);
+  padding:60px 40px;gap:50px;align-items:center;max-width:1200px;margin:0 auto;
+}
+@media(max-width:760px){.split{grid-template-columns:1fr;padding:40px 20px;gap:30px;}}
 .split-img{
   background:
-    radial-gradient(circle at 30% 40%,#FFC9D6 0%,transparent 55%),
-    radial-gradient(circle at 70% 70%,#D4E4F0 0%,transparent 50%),
-    linear-gradient(135deg,var(--pink-bg),var(--blue-bg));
+    radial-gradient(circle at 30% 40%,rgba(244,168,184,.35) 0%,transparent 55%),
+    radial-gradient(circle at 70% 70%,rgba(168,197,218,.3) 0%,transparent 50%),
+    rgba(255,255,255,.5);
   position:relative;min-height:360px;display:grid;place-items:center;
+  border-radius:28px;
+  backdrop-filter:blur(4px);
+  border:1px solid rgba(255,255,255,.7);
 }
 .split-img::after{
   content:"🍪";font-size:180px;
   filter:drop-shadow(0 10px 30px rgba(42,24,16,.2));
 }
-.split-img-deco{
-  position:absolute;font-size:50px;opacity:.5;
-}
+.split-img-deco{position:absolute;font-size:50px;opacity:.55;}
 .split-img .d1{top:15%;left:15%;animation:float 6s ease-in-out infinite;}
 .split-img .d2{bottom:15%;right:15%;animation:float 5s ease-in-out infinite 1s;font-size:40px;}
 .split-img .d3{top:25%;right:20%;animation:float 7s ease-in-out infinite 2s;font-size:35px;}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
-.split-text{
-  background:var(--pink-bg);
-  padding:60px 50px;display:flex;flex-direction:column;justify-content:center;
-}
-.split-text.blue{background:var(--blue-bg);}
+.split-text{background:transparent;padding:20px 10px;}
 .split-text h2{
   font-family:'Fraunces',serif;font-weight:900;
   font-size:clamp(2rem,4vw,3rem);letter-spacing:-1px;line-height:1.05;margin-bottom:20px;
 }
 .split-text p{font-size:1.02rem;color:var(--cocoa2);line-height:1.6;margin-bottom:24px;max-width:420px;}
-.split-text .btn-pill{align-self:flex-start;}
 
 /* ===== KITS / PRODUCTS GRID ===== */
 .section{padding:90px 20px;}
@@ -178,9 +178,32 @@ body{
   filter:drop-shadow(0 6px 14px rgba(42,24,16,.18));
 }
 .kit-cookies.single{font-size:110px;}
-.kit-cookies.four{font-size:60px;grid-template-columns:repeat(2,1fr);}
-.kit-cookies.eight{font-size:38px;grid-template-columns:repeat(4,1fr);gap:6px;}
-.kit-cookies span{display:inline-block;}
+.kit-cookies.four{
+  position:relative;width:170px;height:170px;font-size:58px;
+  filter:drop-shadow(0 6px 14px rgba(42,24,16,.18));
+}
+.kit-cookies.four span{
+  position:absolute;transform:translate(-50%,-50%);display:inline-block;
+}
+.kit-cookies.four span:nth-child(1){top:8%;  left:50%;}
+.kit-cookies.four span:nth-child(2){top:50%; left:8%;}
+.kit-cookies.four span:nth-child(3){top:50%; left:92%;}
+.kit-cookies.four span:nth-child(4){top:92%; left:50%;}
+.kit-cookies.eight{
+  position:relative;width:180px;height:180px;font-size:38px;
+  filter:drop-shadow(0 6px 14px rgba(42,24,16,.18));
+}
+.kit-cookies.eight span{
+  position:absolute;transform:translate(-50%,-50%);display:inline-block;
+}
+.kit-cookies.eight span:nth-child(1){top:6%;  left:50%;}
+.kit-cookies.eight span:nth-child(2){top:21%; left:80%;}
+.kit-cookies.eight span:nth-child(3){top:50%; left:94%;}
+.kit-cookies.eight span:nth-child(4){top:79%; left:80%;}
+.kit-cookies.eight span:nth-child(5){top:94%; left:50%;}
+.kit-cookies.eight span:nth-child(6){top:79%; left:20%;}
+.kit-cookies.eight span:nth-child(7){top:50%; left:6%;}
+.kit-cookies.eight span:nth-child(8){top:21%; left:20%;}
 .kit-info{padding:24px 22px 28px;text-align:center;}
 .kit-info h3{font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;margin-bottom:8px;}
 .kit-info .desc{font-size:.82rem;color:var(--cocoa2);margin-bottom:14px;line-height:1.5;}
@@ -359,6 +382,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
 </section>
 
 <!-- ========== SPLIT BLOCK 1 ========== -->
+<div style="background:linear-gradient(180deg,var(--pink-bg) 0%,var(--cream) 100%);padding:0 20px;">
 <section class="split">
   <div class="split-img">
     <span class="split-img-deco d1">✨</span>
@@ -367,9 +391,10 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
   </div>
   <div class="split-text">
     <h2>Pick up your kit straight at school.</h2>
-    <p>Order online, pay by bank transfer or cash, and grab your decorating kit at ASHS. No shipping, no waiting — just walk over and collect.</p>
+    <p>Order online, pay by bank transfer or cash, and grab your decorating kit at ASHS.</p>
   </div>
 </section>
+</div>
 
 <!-- ========== FLAVOURS ========== -->
 <section class="section flav-bg">
@@ -590,7 +615,7 @@ function renderForm(){
           </label>`).join("")}
       </div>
       <label class="lbl">How many extra cookies? ($4 each · max 10)</label>
-      <input type="number" min="0" max="10" value="${O.extraCookies||0}" oninput="setNum('extraCookies',this.value,0,10)">
+      <input type="number" min="0" max="10" value="${O.extraCookies||0}" oninput="setNum('extraCookies',this.value,0,10);updateTotal()">
     </div>
 
     <div class="card">
@@ -616,7 +641,7 @@ function renderForm(){
           ${TOPPINGS.map(t=>`<option ${O.toppings[i]===t?'selected':''}>${t}</option>`).join("")}
         </select>`).join("")}
       <label class="lbl">How much extra topping? (+$1 each)</label>
-      <input type="number" min="0" max="10" value="${O.extraToppingCount||0}" oninput="setNum('extraToppingCount',this.value,0,10)">
+      <input type="number" min="0" max="10" value="${O.extraToppingCount||0}" oninput="setNum('extraToppingCount',this.value,0,10);updateTotal()">
       <label class="lbl">Which extra toppings? (optional)</label>
       <input type="text" value="${esc(O.extraToppingNote)}" placeholder="e.g. more Oreo + sprinkles" oninput="O.extraToppingNote=this.value">
     </div>
@@ -711,6 +736,7 @@ function pick(f,v){
 }
 function setArr(f,i,v){O[f][i]=v;}
 function setNum(f,v,mn,mx){let n=parseInt(v)||0;n=Math.max(mn,Math.min(mx,n));O[f]=n;}
+function updateTotal(){const el=document.querySelector('.ta');if(el)el.textContent='$'+total().toFixed(2);}
 
 function goReview(){
   syncText();
