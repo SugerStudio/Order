@@ -862,9 +862,11 @@ function renderForm(){
           ${TOPPINGS.map(t=>`<option ${O.toppings[i]===t?'selected':''}>${t}</option>`).join("")}
         </select>`).join("")}
       <label class="lbl">How much extra topping? (+$1 each)</label>
-      <input type="number" min="0" max="10" value="${O.extraToppingCount||0}" oninput="setNum('extraToppingCount',this.value,0,10);updateTotal()">
-      <label class="lbl">Which extra toppings? (optional)</label>
-      <input type="text" value="${esc(O.extraToppingNote)}" placeholder="e.g. more Oreo + sprinkles" oninput="O.extraToppingNote=this.value">
+      <input type="number" min="0" max="10" value="${O.extraToppingCount||0}" oninput="updateExtraTopping(this.value)">
+      <div id="extra-topping-note" style="display:${O.extraToppingCount>0?'block':'none'}">
+        <label class="lbl">Which extra toppings? (optional)</label>
+        <input type="text" value="${esc(O.extraToppingNote)}" placeholder="e.g. more Oreo + sprinkles" oninput="O.extraToppingNote=this.value">
+      </div>
     </div>
 
     <div class="card">
@@ -958,6 +960,12 @@ function pick(f,v){
 function setArr(f,i,v){O[f][i]=v;}
 function setNum(f,v,mn,mx){let n=parseInt(v)||0;n=Math.max(mn,Math.min(mx,n));O[f]=n;}
 function updateTotal(){const el=document.querySelector('.ta');if(el)el.textContent='$'+total().toFixed(2);}
+function updateExtraTopping(val){
+  setNum('extraToppingCount',val,0,10);
+  updateTotal();
+  const wrap=document.getElementById('extra-topping-note');
+  if(wrap) wrap.style.display=O.extraToppingCount>0?'block':'none';
+}
 
 function goReview(){
   syncText();
