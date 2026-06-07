@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sugar Studio — Cookie Decorating Kits</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,800;9..144,900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -462,6 +464,19 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
 @keyframes shimmer{0%,100%{opacity:1}50%{opacity:.75}}
 .cta-banner h2 em{animation:shimmer 3s ease-in-out infinite;}
 
+/* address map */
+.map-wrap{margin:0 0 13px;border-radius:14px;overflow:hidden;border:2px solid var(--line);}
+#leaflet-map{height:240px;width:100%;background:#E8F2F8;}
+.addr-suggestions{margin-bottom:13px;}
+.addr-suggestion{
+  padding:10px 14px;border:2px solid var(--line);background:#fff;
+  cursor:pointer;font-size:.86rem;border-radius:10px;margin-bottom:6px;
+  transition:.15s;line-height:1.4;
+}
+.addr-suggestion:hover{background:var(--pink-bg);border-color:var(--pink);}
+.addr-suggestion .pin{margin-right:6px;}
+.addr-loading{font-size:.78rem;color:var(--cocoa2);padding:6px 4px;margin-bottom:13px;}
+
 /* scroll-triggered counter for total */
 .totalbar{animation:fadein .4s ease both;}
 
@@ -754,6 +769,15 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxW9O1qdC72EfvuZs5-vdLIw6VYf02-19Dy36FNHSNb5QdX6F6UsIvrMtvFfoqnko6t/exec";
 
+const NORTH_SHORE_SUBURBS = [
+  "Albany","Bayview","Bayswater","Beach Haven","Belmont","Birkdale","Birkenhead",
+  "Browns Bay","Campbells Bay","Castor Bay","Chatswood","Cheltenham","Crown Hill",
+  "Devonport","Forrest Hill","Glenfield","Hauraki","Highbury","Hillcrest",
+  "Long Bay","Mairangi Bay","Milford","Murrays Bay","Narrow Neck","Northcote",
+  "Northcross","Pinehill","Rosedale","Rothesay Bay","Stanley Point","Sunnynook",
+  "Takapuna","Torbay","Unsworth Heights","Wairau Valley","Westlake","Windsor Park"
+];
+
 const PACKS = {
   single:{ label:"Single Pack", desc:"1 cookie · 2 icing · 2 toppings",  price:5,  cookies:1, icings:2, tops:2 },
   four:  { label:"4 Pack",      desc:"4 cookies · 3 icing · 4 toppings", price:15, cookies:4, icings:3, tops:4 },
@@ -774,7 +798,12 @@ let stage = "form";
 function blank(){
   return {name:"",email:"",pack:"",cookie:"",
           extraCookies:0,icings:["","",""],toppings:["","","","","",""],
-          extraToppingCount:0,extraToppingNote:"",colorNote:"",specialRequests:""};
+          extraToppingCount:0,extraToppingSelections:[],colorNote:"",
+          specialRequests:"",
+          delivery:"pickup",
+          paymentMethod:"",
+          address:"",suburb:"",deliveryNote:"",addressLat:null,addressLon:null,
+          deliveryDistance:null,deliveryFee:null};
 }
 
 function total(){
@@ -784,6 +813,7 @@ function total(){
   if(c&&c.extra) t+=c.extra*p.cookies;
   t+=(O.extraCookies||0)*4;
   t+=(O.extraToppingCount||0)*1;
+  if(O.delivery==='deliver' && O.deliveryFee) t+=O.deliveryFee;
   return t;
 }
 
@@ -817,6 +847,10 @@ function render(){
   if(stage==="done") return renderConfirm();
   if(stage==="review") return renderReview();
   renderForm();
+  // Init map if delivery is selected and map element exists
+  if(O.delivery==='deliver'){
+    setTimeout(()=>{ if(document.getElementById('leaflet-map')) initMap(); }, 60);
+  }
 }
 
 function renderForm(){
@@ -895,8 +929,12 @@ function renderForm(){
         </div>
       </div>
       <div id="extra-topping-note" style="display:${O.extraToppingCount>0?'block':'none'}">
-        <label class="lbl">Which extra toppings? (optional)</label>
-        <input type="text" value="${esc(O.extraToppingNote)}" placeholder="e.g. more Oreo + sprinkles" oninput="O.extraToppingNote=this.value">
+        ${Array.from({length:O.extraToppingCount}).map((_,i)=>`
+          <label class="lbl">Extra topping ${i+1}</label>
+          <select onchange="setExtraTopping(${i},this.value)">
+            <option value="">— choose —</option>
+            ${TOPPINGS.map(t=>`<option ${(O.extraToppingSelections[i]||'')=== t?'selected':''}>${t}</option>`).join('')}
+          </select>`).join('')}
       </div>
     </div>
 
@@ -904,6 +942,68 @@ function renderForm(){
       <div class="step-head"><span class="step-num">6</span><h3>Dietary restrictions or special requests</h3></div>
       <div class="hint">Allergies, dietary needs (vegan, gluten-free, nut-free), or anything else we should know? (optional)</div>
       <textarea placeholder="e.g. nut allergy, gluten-free icing, please write 'happy birthday' on top..." oninput="O.specialRequests=this.value">${esc(O.specialRequests)}</textarea>
+    </div>
+
+    <div class="card">
+      <div class="step-head"><span class="step-num">7</span><h3>Collection method</h3></div>
+      <div class="opts">
+        <label class="opt ${O.delivery==='pickup'?'sel':''}" onclick="pick('delivery','pickup')">
+          <input type="radio" name="delivery" ${O.delivery==='pickup'?'checked':''}>
+          <div>
+            <div class="ot">🏫 Pick up at ASHS</div>
+            <div class="od">Free — collect at school</div>
+          </div>
+        </label>
+        <label class="opt ${O.delivery==='deliver'?'sel':''}" onclick="pick('delivery','deliver')">
+          <input type="radio" name="delivery" ${O.delivery==='deliver'?'checked':''}>
+          <div>
+            <div class="ot">🚗 Delivery</div>
+            <div class="od">We'll come to you — fee based on location</div>
+          </div>
+        </label>
+      </div>
+      ${O.delivery==='deliver'?`
+        <div style="background:var(--blue-bg);border:1px solid var(--blue);border-radius:12px;padding:10px 14px;font-size:.82rem;color:var(--cocoa2);margin-bottom:14px;">
+          📍 Delivery is currently available in the <b>North Shore</b> region only.
+        </div>
+        <label class="lbl">Street address <span class="req">*</span></label>
+        <input type="text" id="f-address" autocomplete="off" value="${esc(O.address)}" placeholder="Start typing your address..." oninput="onAddressInput(this.value)">
+        <div id="addr-suggestions" class="addr-suggestions"></div>
+        <label class="lbl">Suburb <span class="req">*</span></label>
+        <select id="f-suburb" onchange="O.suburb=this.value;triggerAddressMap()">
+          <option value="">— select suburb —</option>
+          ${NORTH_SHORE_SUBURBS.map(s=>`<option ${O.suburb===s?'selected':''}>${s}</option>`).join('')}
+        </select>
+        <div class="map-wrap">
+          <div id="leaflet-map"></div>
+        </div>
+        <div id="delivery-fee-display" style="display:${O.deliveryFee?'block':'none'};background:var(--pink-bg);border:2px solid var(--pink);border-radius:12px;padding:12px 16px;margin-bottom:13px;font-size:.9rem;"></div>
+        <label class="lbl">Delivery note (optional)</label>
+        <input type="text" id="f-dnote" value="${esc(O.deliveryNote)}" placeholder="e.g. ring doorbell, leave at door" oninput="O.deliveryNote=this.value">
+      `:''}
+    </div>
+
+    <div class="card">
+      <div class="step-head"><span class="step-num">8</span><h3>Payment method</h3></div>
+      <div class="hint">${O.delivery==='deliver'?'For delivery orders, bank transfer only.':'Pay by bank transfer or cash at school.'}</div>
+      <div class="opts">
+        <label class="opt ${O.paymentMethod==='bank'?'sel':''}" onclick="pick('paymentMethod','bank')">
+          <input type="radio" name="payment" ${O.paymentMethod==='bank'?'checked':''}>
+          <div>
+            <div class="ot">💳 Bank transfer</div>
+            <div class="od">Carly SO · 12-3136-0602821-01</div>
+          </div>
+        </label>
+        ${O.delivery==='pickup'?`
+        <label class="opt ${O.paymentMethod==='cash'?'sel':''}" onclick="pick('paymentMethod','cash')">
+          <input type="radio" name="payment" ${O.paymentMethod==='cash'?'checked':''}>
+          <div>
+            <div class="ot">💵 Cash at school</div>
+            <div class="od">Pay when you collect at ASHS</div>
+          </div>
+        </label>
+        `:''}
+      </div>
     </div>
 
     <div id="oErr"></div>
@@ -933,6 +1033,11 @@ function renderReview(){
         <h4>👤 Your details</h4>
         <div class="prow"><span>Name</span><span>${esc(O.name)}</span></div>
         <div class="prow"><span>Email</span><span>${esc(O.email)}</span></div>
+        <div class="prow"><span>Collection</span><span>${O.delivery==='deliver'?'🚗 Delivery':'🏫 Pick up at ASHS'}</span></div>
+        ${O.delivery==='deliver'?`
+        <div class="prow"><span>Address</span><span>${esc(O.address)}, ${esc(O.suburb)}, ${esc(O.city)}</span></div>
+        ${O.deliveryNote?`<div class="prow"><span>Delivery note</span><span>${esc(O.deliveryNote)}</span></div>`:''}
+        `:''}
       </div>
 
       <div class="paybox pink">
@@ -943,8 +1048,10 @@ function renderReview(){
         <div class="prow"><span>Icing</span><span>${O.icings.slice(0,icN).filter(Boolean).join(', ')}</span></div>
         ${O.colorNote?`<div class="prow"><span>Icing colour</span><span>${esc(O.colorNote)}</span></div>`:''}
         <div class="prow"><span>Toppings</span><span>${O.toppings.slice(0,tpN).filter(Boolean).join(', ')}</span></div>
-        ${O.extraToppingCount?`<div class="prow"><span>Extra toppings</span><span>+${O.extraToppingCount} × $1 = $${O.extraToppingCount}</span></div>`:''}
+        ${O.extraToppingCount?`<div class="prow"><span>Extra toppings</span><span>${O.extraToppingSelections.filter(Boolean).join(', ')||'TBC'} +$${O.extraToppingCount}</span></div>`:''}
         ${O.extraToppingNote?`<div class="prow"><span>Extra topping note</span><span>${esc(O.extraToppingNote)}</span></div>`:''}
+        ${O.delivery==='deliver' && O.deliveryFee?`<div class="prow"><span>Delivery</span><span>+$${O.deliveryFee.toFixed(2)}</span></div>`:''}
+        <div class="prow"><span>Payment</span><span>${O.paymentMethod==='cash'?'💵 Cash at school':'💳 Bank transfer'}</span></div>
         <div class="prow"><span>Total</span><span>$${total().toFixed(2)}</span></div>
       </div>
 
@@ -967,11 +1074,16 @@ function renderConfirm(){
       <p style="color:var(--cocoa2);font-size:.92rem">Thanks ${esc(O.name.split(' ')[0]||'')}! Sugar Studio has your order. Pay below to confirm it.</p>
       <div class="paybox">
         <h4>💳 How to pay</h4>
-        <div class="prow"><span>Account name</span><span>Carly SO</span></div>
-        <div class="prow"><span>Bank transfer</span><span>12-3136-0602821-01</span></div>
-        <div class="prow"><span>Reference</span><span>${esc(O.name)}</span></div>
-        <div class="prow"><span>Cash at school</span><span>ASHS</span></div>
-        <div class="prow"><span>Total</span><span>$${total().toFixed(2)}</span></div>
+        ${O.paymentMethod==='cash'?`
+          <div class="prow"><span>Pay with</span><span>💵 Cash</span></div>
+          <div class="prow"><span>Where</span><span>At ASHS when you collect</span></div>
+          <div class="prow"><span>Amount</span><span>$${total().toFixed(2)}</span></div>
+        `:`
+          <div class="prow"><span>Account name</span><span>Carly SO</span></div>
+          <div class="prow"><span>Bank transfer</span><span>12-3136-0602821-01</span></div>
+          <div class="prow"><span>Reference</span><span>${esc(O.name)}</span></div>
+          <div class="prow"><span>Amount</span><span>$${total().toFixed(2)}</span></div>
+        `}
       </div>
       <button class="btn" onclick="resetOrder()">Place another order</button>
     </div>`;
@@ -986,6 +1098,13 @@ function pick(f,v){
     const tp=PACKS[v].tops;
     for(let i=tp;i<6;i++) O.toppings[i]="";
   }
+  if(f==='delivery' && v==='pickup'){
+    O.deliveryFee=null; O.deliveryDistance=null;
+  }
+  if(f==='delivery' && v==='deliver'){
+    // Delivery forces bank transfer
+    O.paymentMethod='bank';
+  }
   render();
 }
 function setArr(f,i,v){O[f][i]=v;}
@@ -998,11 +1117,24 @@ function nudge(field,dir,mn,mx,inputId){
   const el=document.getElementById(inputId);
   if(el)el.value=n;
 }
+function setExtraTopping(i,val){
+  O.extraToppingSelections[i]=val;
+}
 function updateExtraTopping(val){
   setNum('extraToppingCount',val,0,10);
+  // trim selections if count reduced
+  O.extraToppingSelections = O.extraToppingSelections.slice(0,O.extraToppingCount);
   updateTotal();
+  // re-render just the extra topping section
   const wrap=document.getElementById('extra-topping-note');
-  if(wrap) wrap.style.display=O.extraToppingCount>0?'block':'none';
+  if(!wrap) return;
+  wrap.style.display=O.extraToppingCount>0?'block':'none';
+  wrap.innerHTML=Array.from({length:O.extraToppingCount}).map((_,i)=>`
+    <label class="lbl">Extra topping ${i+1}</label>
+    <select onchange="setExtraTopping(${i},this.value)">
+      <option value="">— choose —</option>
+      ${TOPPINGS.map(t=>`<option ${(O.extraToppingSelections[i]||'')=== t?'selected':''}>${t}</option>`).join('')}
+    </select>`).join('');
 }
 
 function goReview(){
@@ -1013,10 +1145,13 @@ function goReview(){
   const errs=[];
   if(!O.name.trim())  errs.push("name");
   if(!O.email.trim()) errs.push("email");
+  if(O.delivery==='deliver' && !O.address.trim()) errs.push("street address");
+  if(O.delivery==='deliver' && !O.suburb.trim())  errs.push("suburb");
   if(!O.pack)         errs.push("a pack");
   if(!O.cookie)       errs.push("a cookie flavour");
   if(O.icings.slice(0,icN).some(x=>!x)) errs.push("all icing choices");
   if(O.toppings.slice(0,tpN).some(x=>!x)) errs.push("all topping choices");
+  if(!O.paymentMethod) errs.push("a payment method");
   if(errs.length){
     $("#oErr").innerHTML=`<div class="err">Please fill in: ${errs.join(", ")}.</div>`;
     $("#oErr").scrollIntoView({behavior:"smooth",block:"center"});
@@ -1036,13 +1171,19 @@ async function submitOrder(){
   const payload={
     createdAt:new Date().toISOString(),
     name:O.name.trim(), email:O.email.trim(),
+    delivery:O.delivery,
+    address:O.delivery==='deliver'?`${O.address}, ${O.suburb}, North Shore, Auckland`:'ASHS pickup',
+    deliveryNote:O.deliveryNote||"",
+    deliveryDistance:O.deliveryDistance||0,
+    deliveryFee:O.deliveryFee||0,
+    paymentMethod:O.paymentMethod||"",
     pack:O.pack, packLabel:p.label,
     cookie:O.cookie, cookieName:(COOKIES.find(c=>c.id===O.cookie)||{}).name,
     extraCookies:O.extraCookies,
     icings:O.icings.slice(0,icN).filter(Boolean),
     toppings:O.toppings.slice(0,tpN).filter(Boolean),
     extraToppingCount:O.extraToppingCount,
-    extraToppingNote:O.extraToppingNote,
+    extraToppingSelections:O.extraToppingSelections.filter(Boolean),
     colorNote:O.colorNote,
     specialRequests:O.specialRequests,
     total:total()
@@ -1199,6 +1340,150 @@ footObserver.observe(footBrand);
 footBrand.addEventListener('click', () => {
   clickBubble.classList.remove('show');
 });
+
+// ===== ADDRESS MAP + AUTOCOMPLETE =====
+// Kitchen origin - 17 Newbury Place, Glenfield, Auckland (update lat/lon if needed)
+const KITCHEN_LAT = -36.7805;
+const KITCHEN_LON = 174.7180;
+const KITCHEN_ADDRESS = "17 Newbury Place, Glenfield";
+const DELIVERY_RATE_PER_KM = 2; // $ per km - change here if you want different pricing
+
+let _mapInstance = null;
+let _mapMarker = null;
+let _kitchenMarker = null;
+let _routeLine = null;
+let _autoTimer = null;
+let _suggestions = [];
+const NORTH_SHORE_CENTER = [-36.78, 174.75];
+
+function haversine(lat1,lon1,lat2,lon2){
+  const R=6371,toRad=x=>x*Math.PI/180;
+  const dLat=toRad(lat2-lat1),dLon=toRad(lon2-lon1);
+  const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(a));
+}
+
+function initMap(){
+  const el = document.getElementById('leaflet-map');
+  if(!el) return;
+  if(_mapInstance && el._leaflet_id) return;
+  if(_mapInstance){ try{_mapInstance.remove();}catch(e){} _mapInstance=null; _mapMarker=null; _kitchenMarker=null; _routeLine=null; }
+  _mapInstance = L.map('leaflet-map',{scrollWheelZoom:false}).setView(NORTH_SHORE_CENTER, 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'© <a href="https://openstreetmap.org">OpenStreetMap</a>',
+    maxZoom:19
+  }).addTo(_mapInstance);
+  // Re-pin if address already saved
+  if(O.addressLat && O.addressLon){
+    placePin(O.addressLat, O.addressLon, `${O.address}, ${O.suburb}`);
+  }
+  setTimeout(()=>{ if(_mapInstance) _mapInstance.invalidateSize(); }, 100);
+}
+
+function placePin(lat, lon, label){
+  if(!_mapInstance) initMap();
+  if(!_mapInstance) return;
+  if(_mapMarker){ _mapInstance.removeLayer(_mapMarker); _mapMarker=null; }
+  const icon = L.divIcon({
+    html:`<div style="background:#F4A8B8;width:32px;height:32px;border-radius:50%;border:3px solid #E88AA0;box-shadow:0 4px 14px rgba(42,24,16,.4);display:grid;place-items:center;font-size:15px;">📍</div>`,
+    className:'',iconSize:[32,32],iconAnchor:[16,16]
+  });
+  _mapMarker = L.marker([lat,lon],{icon}).addTo(_mapInstance);
+  if(label) _mapMarker.bindPopup(label).openPopup();
+  _mapInstance.setView([lat,lon],16);
+  O.addressLat = lat; O.addressLon = lon;
+  // Calculate delivery distance & fee (silently)
+  const dist = haversine(KITCHEN_LAT, KITCHEN_LON, lat, lon);
+  O.deliveryDistance = dist;
+  O.deliveryFee = Math.round(dist * DELIVERY_RATE_PER_KM * 2) / 2;
+  showDeliveryFee();
+  updateTotal();
+}
+
+function showDeliveryFee(){
+  const el = document.getElementById('delivery-fee-display');
+  if(!el) return;
+  if(O.deliveryFee != null && O.delivery === 'deliver'){
+    el.innerHTML = `
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;">
+        <span>🚗 Delivery fee</span>
+        <span style="font-weight:900;color:var(--pink-deep);font-family:'Fraunces',serif;font-size:1.15rem;">+$${O.deliveryFee.toFixed(2)}</span>
+      </div>
+    `;
+    el.style.display = 'block';
+  }
+}
+
+function onAddressInput(val){
+  O.address = val;
+  clearTimeout(_autoTimer);
+  const list = document.getElementById('addr-suggestions');
+  if(val.length < 3){ if(list) list.innerHTML=''; return; }
+  if(list) list.innerHTML = `<div class="addr-loading">Searching addresses…</div>`;
+  _autoTimer = setTimeout(()=>searchAddress(val), 450);
+}
+
+async function searchAddress(query){
+  const list = document.getElementById('addr-suggestions');
+  if(!list) return;
+  // Bias search to North Shore Auckland
+  const q = `${query}, Auckland, New Zealand`;
+  try{
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=5&countrycodes=nz&addressdetails=1`,
+      { headers:{'Accept-Language':'en'} }
+    );
+    const data = await res.json();
+    _suggestions = data || [];
+    if(_suggestions.length === 0){
+      list.innerHTML = `<div class="addr-loading">No matching addresses. Try a different street.</div>`;
+      return;
+    }
+    list.innerHTML = _suggestions.map((item, i) => {
+      const display = item.display_name.split(',').slice(0,3).join(', ');
+      return `<div class="addr-suggestion" onclick="pickSuggestion(${i})"><span class="pin">📍</span>${esc(display)}</div>`;
+    }).join('');
+  } catch(e){
+    list.innerHTML = `<div class="addr-loading">Couldn't search right now.</div>`;
+  }
+}
+
+function pickSuggestion(i){
+  const s = _suggestions[i];
+  if(!s) return;
+  // Extract street address (house number + street)
+  const addr = s.address || {};
+  let streetAddr = '';
+  if(addr.house_number) streetAddr += addr.house_number + ' ';
+  if(addr.road) streetAddr += addr.road;
+  if(!streetAddr) streetAddr = s.display_name.split(',')[0];
+  O.address = streetAddr.trim();
+  // Try to match suburb
+  const possibleSuburb = addr.suburb || addr.neighbourhood || addr.village || addr.town;
+  if(possibleSuburb && NORTH_SHORE_SUBURBS.includes(possibleSuburb)){
+    O.suburb = possibleSuburb;
+    const sel = document.getElementById('f-suburb');
+    if(sel) sel.value = possibleSuburb;
+  }
+  // Update street input
+  const inp = document.getElementById('f-address');
+  if(inp) inp.value = O.address;
+  // Drop pin
+  placePin(parseFloat(s.lat), parseFloat(s.lon), `${O.address}, ${O.suburb||'Auckland'}`);
+  // Clear suggestions
+  document.getElementById('addr-suggestions').innerHTML = '';
+}
+
+// When suburb changes, re-geocode using current address
+function triggerAddressMap(){
+  if(O.address && O.suburb){
+    searchAddress(`${O.address}, ${O.suburb}`).then(()=>{
+      // If suggestions found, auto-pick the first
+      if(_suggestions.length > 0) pickSuggestion(0);
+    });
+  }
+}
+// ===== END ADDRESS MAP =====
 
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
