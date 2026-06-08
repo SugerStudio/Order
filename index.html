@@ -766,7 +766,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxW9O1qdC72EfvuZs5-vdLIw6VYf02-19Dy36FNHSNb5QdX6F6UsIvrMtvFfoqnko6t/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZbTJ8dQAoWmmfmoAb2DnevE5-unGK1uftG4-q81vAnLP6Yzh_Ze9OedpMV8sP5IN2lQ/exec";
 
 const NORTH_SHORE_SUBURBS = [
   "Albany","Bayview","Bayswater","Beach Haven","Belmont","Birkdale","Birkenhead",
@@ -867,7 +867,7 @@ function renderForm(){
             <div class="op">$${v.price}</div>
           </label>`).join("")}
       </div>
-      <label class="lbl">How many extra cookies? ($${EXTRA_COOKIE_PRICE} each)</label>
+      <label class="lbl">How many extra cookies? ($${EXTRA_COOKIE_PRICE} each · max 10)</label>
       <div class="stepper-wrap">
         <input type="number" id="in-extraCookies" min="0" max="10" value="${O.extraCookies||0}" oninput="setNum('extraCookies',this.value,0,10);updateTotal()" style="margin-bottom:0">
         <div class="stepper-btns">
