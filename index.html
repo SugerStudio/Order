@@ -259,7 +259,7 @@ body{
 
 /* ===== FLAVOURS ===== */
 .flav-bg{background:var(--pink-bg);}
-.flav-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:36px;}
+.flav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px;}
 @media(max-width:760px){.flav-grid{grid-template-columns:repeat(2,1fr);}}
 .flav-card{background:#fff;border-radius:18px;padding:24px 18px;text-align:center;cursor:pointer;transition:.2s;border:2px solid transparent;}
 .flav-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--pink);}
@@ -642,13 +642,12 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
     <div class="section-head">
       <div class="eyebrow">What's inside</div>
       <h2 class="h-title">Cookies that <em>actually</em> taste good.</h2>
-      <p class="h-sub">Four cookie bases. Five icing flavours. Eleven toppings. Endless combinations.</p>
+      <p class="h-sub">Three cookie flavours. Five icing flavours. Eleven toppings. Endless combinations.</p>
     </div>
     <div class="flav-grid">
-      <div class="flav-card reveal" onclick="selectCookie('choc')"><span class="flav-emoji">🍫</span><div class="flav-name">Chocolate Chip</div><div class="flav-tag">A classic</div></div>
-      <div class="flav-card reveal" onclick="selectCookie('sugar')"><span class="flav-emoji">🌸</span><div class="flav-name">Sugar Cookie</div><div class="flav-tag">Buttery & soft</div></div>
-      <div class="flav-card reveal" onclick="selectCookie('velvet')"><span class="flav-emoji">❤️</span><div class="flav-name">Red Velvet</div><div class="flav-tag">For the romantics</div></div>
-      <div class="flav-card reveal" onclick="selectCookie('oreo')"><span class="flav-emoji">🖤</span><div class="flav-name">Oreo</div><div class="flav-tag">Crumbly & rich</div></div>
+      <div class="flav-card reveal" onclick="selectKitHome('choc')"><span class="flav-emoji">🍫</span><div class="flav-name">Chocolate Chip</div><div class="flav-tag">$15 · A classic</div></div>
+      <div class="flav-card reveal" onclick="selectKitHome('velvet')"><span class="flav-emoji">❤️</span><div class="flav-name">Red Velvet</div><div class="flav-tag">$20 · For the romantics</div></div>
+      <div class="flav-card reveal" onclick="selectKitHome('sugar')"><span class="flav-emoji">🌸</span><div class="flav-name">Sugar Cookie</div><div class="flav-tag">$15 · Buttery & soft</div></div>
     </div>
   </div>
 </section>
@@ -658,34 +657,34 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
   <div class="section-inner">
     <div class="section-head">
       <div class="eyebrow">Our Kits</div>
-      <h2 class="h-title">Three sizes. <em>Endless</em> combos.</h2>
-      <p class="h-sub">Whether it's a solo treat or a kit for the whole friend group, Sugar Studio has something for the cookie monster in everyone.</p>
+      <h2 class="h-title">Three flavours. <em>Endless</em> combos.</h2>
+      <p class="h-sub">Every kit is a 4-pack — 4 cookies, 3 icings, and 4 toppings of your choice. Pick your cookie flavour below.</p>
     </div>
     <div class="kits-grid">
-      <div class="kit-card reveal" onclick="selectPack('single')">
-        <div class="kit-img"><div class="kit-cookies single"><span>🍪</span></div></div>
+      <div class="kit-card reveal" onclick="selectKitHome('choc')">
+        <div class="kit-img"><div class="kit-cookies four"><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span></div></div>
         <div class="kit-info">
-          <h3>Single Pack</h3>
-          <div class="desc">1 cookie · 2 icing · 2 toppings</div>
-          <div class="price">$5<small>per pack</small></div>
+          <h3>🍫 Chocolate Chip</h3>
+          <div class="desc">4 cookies · 3 icing · 4 toppings</div>
+          <div class="price">$15<small>per kit</small></div>
           <button class="btn-pill">Build kit</button>
         </div>
       </div>
-      <div class="kit-card reveal" onclick="selectPack('four')">
+      <div class="kit-card reveal" onclick="selectKitHome('velvet')">
         <div class="kit-img"><div class="kit-cookies four"><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span></div></div>
         <div class="kit-info">
-          <h3>4 Pack</h3>
+          <h3>❤️ Red Velvet</h3>
           <div class="desc">4 cookies · 3 icing · 4 toppings</div>
-          <div class="price">$15<small>per pack</small></div>
+          <div class="price">$20<small>per kit</small></div>
           <button class="btn-pill blue">Build kit</button>
         </div>
       </div>
-      <div class="kit-card reveal" onclick="selectPack('eight')">
-        <div class="kit-img"><div class="kit-cookies eight"><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span></div></div>
+      <div class="kit-card reveal" onclick="selectKitHome('sugar')">
+        <div class="kit-img"><div class="kit-cookies four"><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span></div></div>
         <div class="kit-info">
-          <h3>8 Pack</h3>
-          <div class="desc">8 cookies · 3 icing · 6 toppings</div>
-          <div class="price">$25<small>per pack</small></div>
+          <h3>🌸 Sugar Cookie</h3>
+          <div class="desc">4 cookies · 3 icing · 4 toppings</div>
+          <div class="price">$15<small>per kit</small></div>
           <button class="btn-pill">Build kit</button>
         </div>
       </div>
@@ -778,17 +777,12 @@ const NORTH_SHORE_SUBURBS = [
   "Takapuna","Torbay","Unsworth Heights","Wairau Valley","Westlake","Windsor Park"
 ];
 
-const PACKS = {
-  single:{ label:"Single Pack", desc:"1 cookie · 2 icing · 2 toppings",  price:5,  cookies:1, icings:2, tops:2 },
-  four:  { label:"4 Pack",      desc:"4 cookies · 3 icing · 4 toppings", price:15, cookies:4, icings:3, tops:4 },
-  eight: { label:"8 Pack",      desc:"8 cookies · 3 icing · 6 toppings", price:25, cookies:8, icings:3, tops:6 },
+const KITS = {
+  choc:   { id:"choc",   name:"Chocolate Chip Cookies", cookieName:"Chocolate Chip", price:15, cookies:4, icings:3, tops:4, emoji:"🍫" },
+  velvet: { id:"velvet", name:"Red Velvet Cookies",     cookieName:"Red Velvet",     price:20, cookies:4, icings:3, tops:4, emoji:"❤️" },
+  sugar:  { id:"sugar",  name:"Sugar Cookies",          cookieName:"Sugar Cookie",   price:15, cookies:4, icings:3, tops:4, emoji:"🌸" },
 };
-const COOKIES = [
-  {id:"choc",   name:"Chocolate Chip", extra:0},
-  {id:"sugar",  name:"Sugar Cookie",   extra:0},
-  {id:"velvet", name:"Red Velvet",     extra:0},
-  {id:"oreo",   name:"Oreo Cookie",    extra:1},
-];
+const EXTRA_COOKIE_PRICE = 3;
 const ICINGS  = ["Vanilla Buttercream","Lemon Buttercream","Milk Chocolate Ganache","Dark Chocolate Ganache","White Chocolate Ganache"];
 const TOPPINGS= ["Oreo","KitKat","Bueno","Pretzels","Mini M&Ms","Shredded Coconut","Chocolate Chip","Chocolate Button","White Chocolate Button","Dark Chocolate Button","Crushed Almonds"];
 
@@ -796,7 +790,7 @@ let O = blank();
 let stage = "form";
 
 function blank(){
-  return {name:"",email:"",pack:"",cookie:"",
+  return {name:"",email:"",kit:"",
           extraCookies:0,icings:["","",""],toppings:["","","","","",""],
           extraToppingCount:0,extraToppingSelections:[],colorNote:"",
           specialRequests:"",
@@ -807,11 +801,9 @@ function blank(){
 }
 
 function total(){
-  const p=PACKS[O.pack]; if(!p) return 0;
-  let t=p.price;
-  const c=COOKIES.find(x=>x.id===O.cookie);
-  if(c&&c.extra) t+=c.extra*p.cookies;
-  t+=(O.extraCookies||0)*4;
+  const k=KITS[O.kit]; if(!k) return 0;
+  let t=k.price;
+  t+=(O.extraCookies||0)*EXTRA_COOKIE_PRICE;
   t+=(O.extraToppingCount||0)*1;
   if(O.delivery==='deliver' && O.deliveryFee) t+=O.deliveryFee;
   return t;
@@ -826,18 +818,16 @@ function syncText(){
 function scrollToOrder(){document.getElementById("order").scrollIntoView({behavior:"smooth"});}
 
 function selectPack(packKey){
-  O.pack = packKey;
-  const ic = PACKS[packKey].icings;
-  for(let i=ic;i<3;i++) O.icings[i]="";
-  const tp = PACKS[packKey].tops;
-  for(let i=tp;i<6;i++) O.toppings[i]="";
-  stage = "form";
-  render();
+  // Legacy — kept for compatibility
   scrollToOrder();
 }
 
 function selectCookie(cookieId){
-  O.cookie = cookieId;
+  selectKitHome(cookieId);
+}
+
+function selectKitHome(kitId){
+  if(KITS[kitId]) O.kit = kitId;
   stage = "form";
   render();
   scrollToOrder();
@@ -854,9 +844,9 @@ function render(){
 }
 
 function renderForm(){
-  const p=PACKS[O.pack];
-  const icN=p?p.icings:2;
-  const tpN=p?p.tops:2;
+  const k=KITS[O.kit];
+  const icN=k?k.icings:3;
+  const tpN=k?k.tops:4;
   $("#view").innerHTML=`
     <div class="card">
       <div class="step-head"><span class="step-num">1</span><h3>Your details</h3></div>
@@ -867,28 +857,17 @@ function renderForm(){
     </div>
 
     <div class="card">
-      <div class="step-head"><span class="step-num">2</span><h3>Choose your pack</h3></div>
+      <div class="step-head"><span class="step-num">2</span><h3>Build your kit</h3></div>
+      <div class="hint">Every kit is a 4-pack with 3 icing choices and 4 topping choices.</div>
       <div class="opts">
-        ${Object.entries(PACKS).map(([k,v])=>`
-          <label class="opt ${O.pack===k?'sel':''}" onclick="pick('pack','${k}')">
-            <input type="radio" name="pack" ${O.pack===k?'checked':''}>
-            <div><div class="ot">${v.label}</div><div class="od">${v.desc}</div></div>
+        ${Object.entries(KITS).map(([id,v])=>`
+          <label class="opt ${O.kit===id?'sel':''}" onclick="pick('kit','${id}')">
+            <input type="radio" name="kit" ${O.kit===id?'checked':''}>
+            <div><div class="ot">${v.emoji} ${v.name}</div><div class="od">4 cookies · 3 icing · 4 toppings</div></div>
             <div class="op">$${v.price}</div>
           </label>`).join("")}
       </div>
-    </div>
-
-    <div class="card">
-      <div class="step-head"><span class="step-num">3</span><h3>Cookie flavour</h3></div>
-      <div class="opts">
-        ${COOKIES.map(c=>`
-          <label class="opt ${O.cookie===c.id?'sel':''}" onclick="pick('cookie','${c.id}')">
-            <input type="radio" name="cookie" ${O.cookie===c.id?'checked':''}>
-            <div class="ot">${c.name}</div>
-            ${c.extra?`<div class="op">+$${c.extra}/cookie</div>`:''}
-          </label>`).join("")}
-      </div>
-      <label class="lbl">How many extra cookies? ($4 each · max 10)</label>
+      <label class="lbl">How many extra cookies? ($${EXTRA_COOKIE_PRICE} each)</label>
       <div class="stepper-wrap">
         <input type="number" id="in-extraCookies" min="0" max="10" value="${O.extraCookies||0}" oninput="setNum('extraCookies',this.value,0,10);updateTotal()" style="margin-bottom:0">
         <div class="stepper-btns">
@@ -899,8 +878,8 @@ function renderForm(){
     </div>
 
     <div class="card">
-      <div class="step-head"><span class="step-num">4</span><h3>Icing flavours</h3></div>
-      <div class="hint">Your ${p?p.label:'pack'} includes ${icN} icing choice${icN>1?'s':''}.</div>
+      <div class="step-head"><span class="step-num">3</span><h3>Icing flavours</h3></div>
+      <div class="hint">Your kit includes ${icN} icing choice${icN>1?'s':''}.</div>
       ${Array.from({length:icN}).map((_,i)=>`
         <label class="lbl">Icing ${i+1} <span class="req">*</span></label>
         <select onchange="setArr('icings',${i},this.value)">
@@ -912,8 +891,8 @@ function renderForm(){
     </div>
 
     <div class="card">
-      <div class="step-head"><span class="step-num">5</span><h3>Toppings</h3></div>
-      <div class="hint">Your ${p?p.label:'pack'} includes ${tpN} topping choice${tpN>1?'s':''}.</div>
+      <div class="step-head"><span class="step-num">4</span><h3>Toppings</h3></div>
+      <div class="hint">Your kit includes ${tpN} topping choice${tpN>1?'s':''}.</div>
       ${Array.from({length:tpN}).map((_,i)=>`
         <label class="lbl">Topping ${i+1} <span class="req">*</span></label>
         <select onchange="setArr('toppings',${i},this.value)">
@@ -939,13 +918,13 @@ function renderForm(){
     </div>
 
     <div class="card">
-      <div class="step-head"><span class="step-num">6</span><h3>Dietary restrictions or special requests</h3></div>
+      <div class="step-head"><span class="step-num">5</span><h3>Dietary restrictions or special requests</h3></div>
       <div class="hint">Allergies, dietary needs (vegan, gluten-free, nut-free), or anything else we should know? (optional)</div>
       <textarea placeholder="e.g. nut allergy, gluten-free icing, please write 'happy birthday' on top..." oninput="O.specialRequests=this.value">${esc(O.specialRequests)}</textarea>
     </div>
 
     <div class="card">
-      <div class="step-head"><span class="step-num">7</span><h3>Collection method</h3></div>
+      <div class="step-head"><span class="step-num">6</span><h3>Collection method</h3></div>
       <div class="opts">
         <label class="opt ${O.delivery==='pickup'?'sel':''}" onclick="pick('delivery','pickup')">
           <input type="radio" name="delivery" ${O.delivery==='pickup'?'checked':''}>
@@ -984,7 +963,7 @@ function renderForm(){
     </div>
 
     <div class="card">
-      <div class="step-head"><span class="step-num">8</span><h3>Payment method</h3></div>
+      <div class="step-head"><span class="step-num">7</span><h3>Payment method</h3></div>
       <div class="hint">${O.delivery==='deliver'?'For delivery orders, bank transfer only.':'Pay by bank transfer or cash at school.'}</div>
       <div class="opts">
         <label class="opt ${O.paymentMethod==='bank'?'sel':''}" onclick="pick('paymentMethod','bank')">
@@ -1018,9 +997,8 @@ function renderForm(){
 }
 
 function renderReview(){
-  const p=PACKS[O.pack];
-  const c=COOKIES.find(x=>x.id===O.cookie);
-  const icN=p.icings, tpN=p.tops;
+  const k=KITS[O.kit];
+  const icN=k.icings, tpN=k.tops;
   $("#view").innerHTML=`
     <div class="card">
       <div class="review-head">
@@ -1035,21 +1013,19 @@ function renderReview(){
         <div class="prow"><span>Email</span><span>${esc(O.email)}</span></div>
         <div class="prow"><span>Collection</span><span>${O.delivery==='deliver'?'🚗 Delivery':'🏫 Pick up at ASHS'}</span></div>
         ${O.delivery==='deliver'?`
-        <div class="prow"><span>Address</span><span>${esc(O.address)}, ${esc(O.suburb)}, ${esc(O.city)}</span></div>
+        <div class="prow"><span>Address</span><span>${esc(O.address)}, ${esc(O.suburb)}, North Shore, Auckland</span></div>
         ${O.deliveryNote?`<div class="prow"><span>Delivery note</span><span>${esc(O.deliveryNote)}</span></div>`:''}
         `:''}
       </div>
 
       <div class="paybox pink">
         <h4>🍪 Your kit</h4>
-        <div class="prow"><span>Pack</span><span>${p.label} — $${p.price}</span></div>
-        <div class="prow"><span>Cookie</span><span>${c.name}${c.extra?` (+$${c.extra*p.cookies})`:''}</span></div>
-        ${O.extraCookies?`<div class="prow"><span>Extra cookies</span><span>+${O.extraCookies} × $4 = $${O.extraCookies*4}</span></div>`:''}
+        <div class="prow"><span>Kit</span><span>${k.emoji} ${k.name} — $${k.price}</span></div>
+        ${O.extraCookies?`<div class="prow"><span>Extra cookies</span><span>+${O.extraCookies} × $${EXTRA_COOKIE_PRICE} = $${O.extraCookies*EXTRA_COOKIE_PRICE}</span></div>`:''}
         <div class="prow"><span>Icing</span><span>${O.icings.slice(0,icN).filter(Boolean).join(', ')}</span></div>
         ${O.colorNote?`<div class="prow"><span>Icing colour</span><span>${esc(O.colorNote)}</span></div>`:''}
         <div class="prow"><span>Toppings</span><span>${O.toppings.slice(0,tpN).filter(Boolean).join(', ')}</span></div>
         ${O.extraToppingCount?`<div class="prow"><span>Extra toppings</span><span>${O.extraToppingSelections.filter(Boolean).join(', ')||'TBC'} +$${O.extraToppingCount}</span></div>`:''}
-        ${O.extraToppingNote?`<div class="prow"><span>Extra topping note</span><span>${esc(O.extraToppingNote)}</span></div>`:''}
         ${O.delivery==='deliver' && O.deliveryFee?`<div class="prow"><span>Delivery</span><span>+$${O.deliveryFee.toFixed(2)}</span></div>`:''}
         <div class="prow"><span>Payment</span><span>${O.paymentMethod==='cash'?'💵 Cash at school':'💳 Bank transfer'}</span></div>
         <div class="prow"><span>Total</span><span>$${total().toFixed(2)}</span></div>
@@ -1092,17 +1068,10 @@ function renderConfirm(){
 function pick(f,v){
   syncText();
   O[f]=v;
-  if(f==='pack'){
-    const ic=PACKS[v].icings;
-    for(let i=ic;i<3;i++) O.icings[i]="";
-    const tp=PACKS[v].tops;
-    for(let i=tp;i<6;i++) O.toppings[i]="";
-  }
   if(f==='delivery' && v==='pickup'){
     O.deliveryFee=null; O.deliveryDistance=null;
   }
   if(f==='delivery' && v==='deliver'){
-    // Delivery forces bank transfer
     O.paymentMethod='bank';
   }
   render();
@@ -1139,16 +1108,15 @@ function updateExtraTopping(val){
 
 function goReview(){
   syncText();
-  const p=PACKS[O.pack];
-  const icN=p?p.icings:2;
-  const tpN=p?p.tops:2;
+  const k=KITS[O.kit];
+  const icN=k?k.icings:3;
+  const tpN=k?k.tops:4;
   const errs=[];
   if(!O.name.trim())  errs.push("name");
   if(!O.email.trim()) errs.push("email");
   if(O.delivery==='deliver' && !O.address.trim()) errs.push("street address");
   if(O.delivery==='deliver' && !O.suburb.trim())  errs.push("suburb");
-  if(!O.pack)         errs.push("a pack");
-  if(!O.cookie)       errs.push("a cookie flavour");
+  if(!O.kit)          errs.push("a kit");
   if(O.icings.slice(0,icN).some(x=>!x)) errs.push("all icing choices");
   if(O.toppings.slice(0,tpN).some(x=>!x)) errs.push("all topping choices");
   if(!O.paymentMethod) errs.push("a payment method");
@@ -1166,8 +1134,8 @@ function goBack(){stage="form";render();scrollToOrder();}
 async function submitOrder(){
   const btn=$("#submitBtn");
   btn.disabled=true; btn.textContent="Sending…";
-  const p=PACKS[O.pack];
-  const icN=p.icings, tpN=p.tops;
+  const k=KITS[O.kit];
+  const icN=k.icings, tpN=k.tops;
   const payload={
     createdAt:new Date().toISOString(),
     name:O.name.trim(), email:O.email.trim(),
@@ -1177,8 +1145,7 @@ async function submitOrder(){
     deliveryDistance:O.deliveryDistance||0,
     deliveryFee:O.deliveryFee||0,
     paymentMethod:O.paymentMethod||"",
-    pack:O.pack, packLabel:p.label,
-    cookie:O.cookie, cookieName:(COOKIES.find(c=>c.id===O.cookie)||{}).name,
+    kit:O.kit, kitName:k.name, cookieName:k.cookieName, kitPrice:k.price,
     extraCookies:O.extraCookies,
     icings:O.icings.slice(0,icN).filter(Boolean),
     toppings:O.toppings.slice(0,tpN).filter(Boolean),
