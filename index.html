@@ -636,36 +636,20 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
 </section>
 </div>
 
-<!-- ========== FLAVOURS ========== -->
-<section class="section flav-bg">
-  <div class="section-inner">
-    <div class="section-head">
-      <div class="eyebrow">What's inside</div>
-      <h2 class="h-title">Cookies that <em>actually</em> taste good.</h2>
-      <p class="h-sub">Three cookie flavours. Five icing flavours. Eleven toppings. Endless combinations.</p>
-    </div>
-    <div class="flav-grid">
-      <div class="flav-card reveal" onclick="selectKitHome('choc')"><span class="flav-emoji">🍫</span><div class="flav-name">Chocolate Chip</div><div class="flav-tag">$15 · A classic</div></div>
-      <div class="flav-card reveal" onclick="selectKitHome('velvet')"><span class="flav-emoji">❤️</span><div class="flav-name">Red Velvet</div><div class="flav-tag">$20 · For the romantics</div></div>
-      <div class="flav-card reveal" onclick="selectKitHome('sugar')"><span class="flav-emoji">🌸</span><div class="flav-name">Sugar Cookie</div><div class="flav-tag">$15 · Buttery & soft</div></div>
-    </div>
-  </div>
-</section>
-
 <!-- ========== OUR KITS ========== -->
 <section class="section" id="kits">
   <div class="section-inner">
     <div class="section-head">
       <div class="eyebrow">Our Kits</div>
-      <h2 class="h-title">Three flavours. <em>Endless</em> combos.</h2>
-      <p class="h-sub">Every kit is a 4-pack — 4 cookies, 3 icings, and 4 toppings of your choice. Pick your cookie flavour below.</p>
+      <h2 class="h-title">Cookies that <em>actually</em> taste good.</h2>
+      <p class="h-sub">Every kit is a 4-pack with 3 icings, 4 toppings, and your pick of cookie flavour. Three flavours, five icings, eleven toppings — endless combos.</p>
     </div>
     <div class="kits-grid">
       <div class="kit-card reveal" onclick="selectKitHome('choc')">
         <div class="kit-img"><div class="kit-cookies four"><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span></div></div>
         <div class="kit-info">
           <h3>🍫 Chocolate Chip</h3>
-          <div class="desc">4 cookies · 3 icing · 4 toppings</div>
+          <div class="desc">A classic · 4 cookies · 3 icing · 4 toppings</div>
           <div class="price">$15<small>per kit</small></div>
           <button class="btn-pill">Build kit</button>
         </div>
@@ -674,7 +658,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
         <div class="kit-img"><div class="kit-cookies four"><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span></div></div>
         <div class="kit-info">
           <h3>❤️ Red Velvet</h3>
-          <div class="desc">4 cookies · 3 icing · 4 toppings</div>
+          <div class="desc">For the romantics · 4 cookies · 3 icing · 4 toppings</div>
           <div class="price">$20<small>per kit</small></div>
           <button class="btn-pill blue">Build kit</button>
         </div>
@@ -683,7 +667,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);ba
         <div class="kit-img"><div class="kit-cookies four"><span>🍪</span><span>🍪</span><span>🍪</span><span>🍪</span></div></div>
         <div class="kit-info">
           <h3>🌸 Sugar Cookie</h3>
-          <div class="desc">4 cookies · 3 icing · 4 toppings</div>
+          <div class="desc">Buttery & soft · 4 cookies · 3 icing · 4 toppings</div>
           <div class="price">$15<small>per kit</small></div>
           <button class="btn-pill">Build kit</button>
         </div>
@@ -1061,7 +1045,7 @@ function renderConfirm(){
           <div class="prow"><span>Amount</span><span>$${total().toFixed(2)}</span></div>
         `}
       </div>
-      <button class="btn" onclick="resetOrder()">Place another order</button>
+      <button class="btn" onclick="finishOrder()">Done ✓</button>
     </div>`;
 }
 
@@ -1170,6 +1154,7 @@ async function submitOrder(){
 }
 
 function resetOrder(){O=blank();stage="form";render();scrollToOrder();}
+function finishOrder(){O=blank();stage="form";render();window.scrollTo({top:0,behavior:"smooth"});}
 
 // ===== COOKIE PONG =====
 let pongGame = null;
